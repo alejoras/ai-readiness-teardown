@@ -220,11 +220,27 @@
     border-radius:8px;padding:8px 14px;
   }
   .prepared .tag b{color:var(--green-50);font-weight:500}
+  /* co-brand lockup: HackerRank x prospect */
+  .cobrand{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+  .cobrand .hrmark{height:15px;display:block;opacity:.95}
+  .cobrand .x{font-family:var(--font-mono);font-size:13px;color:var(--gs-60)}
+  .cobrand .co{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--gs-5);border-radius:10px;padding:7px 14px 7px 9px;
+    box-shadow:0 4px 24px rgba(34,205,110,.12);
+  }
+  .cobrand .co img{height:22px;width:22px;object-fit:contain;display:block;border-radius:5px}
+  .cobrand .co span{
+    font-family:var(--font-display);font-weight:600;font-size:16px;color:var(--gs-90);
+    letter-spacing:-.01em;
+  }
+
   /* staggered reveal */
   .hero > *{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
   .hero > *:nth-child(2){animation-delay:.08s}
   .hero > *:nth-child(3){animation-delay:.16s}
   .hero > *:nth-child(4){animation-delay:.24s}
+  .hero > *:nth-child(5){animation-delay:.32s}
   @keyframes rise{to{opacity:1;transform:none}}
 
   /* ── stat band ── */
@@ -518,6 +534,15 @@
 
   <!-- HERO -->
   <div class="hero">
+    <!-- co-brand lockup: logo URL comes from the Clay accounts table (logo_url column) -->
+    <div class="cobrand">
+      <img class="hrmark" src="hackerrank-logo-light.svg" alt="HackerRank">
+      <span class="x">&#10005;</span>
+      <span class="co">
+        <img src="https://www.google.com/s2/favicons?domain=vanta.com&amp;sz=64" alt="Vanta logo" onerror="this.style.display='none'">
+        <span>Vanta</span>
+      </span>
+    </div>
     <div class="kicker">AI-Readiness Teardown · June 11, 2026</div>
     <h1>Hey David — you're hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>
     <p class="hero-sub">A role-by-role read of Vanta's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.</p>

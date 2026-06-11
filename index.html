@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanta Engineering Hiring — AI-Readiness Teardown | HackerRank</title>
+<meta name="description" content="A teardown of Vanta's 43 open engineering roles, scored for AI-era readiness against HackerRank's 26M-developer benchmark.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+  /* ── HackerRank design tokens (extracted from hackerrank.com, 2026-06-11) ── */
+  :root{
+    --gs-90:#030914; --gs-80:#0f141c; --gs-60:#6a6d71; --gs-40:#b5b4b3;
+    --gs-30:#dadad8; --gs-20:#eaeae9; --gs-5:#ffffff;
+    --green-5:#e4ffec; --green-10:#c2ffdb; --green-20:#98eebc; --green-30:#72e4a3;
+    --green-40:#4ad888; --green-50:#22cd6e; --green-60:#19aa59; --green-70:#10843e;
+    --green-80:#085428; --green-90:#01230e;
+    --amber:#e8b341; --red:#e85d5d;
+    --font-display:'Funnel Display',sans-serif;
+    --font-body:'Satoshi',Verdana,sans-serif;
+    --font-mono:'Roboto Mono',monospace;
+    --maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--gs-90); color:var(--gs-20);
+    font-family:var(--font-body); font-size:17px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--green-50);color:var(--gs-90)}
+
+  /* atmospheric background: faint grid + green aurora */
+  .bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .bg::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(34,205,110,.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(34,205,110,.04) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  .bg::after{
+    content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);
+    width:1100px;height:680px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(34,205,110,.13),transparent);
+    filter:blur(40px);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ── top bar ── */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(3,9,20,.82);backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(234,234,233,.08);
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .topbar img{height:18px;display:block}
+  .topbar nav{display:flex;gap:26px}
+  .topbar nav a{
+    color:var(--gs-40);text-decoration:none;font-size:13.5px;font-weight:500;
+    letter-spacing:.01em;transition:color .2s;
+  }
+  .topbar nav a:hover{color:var(--green-50)}
+  .sample-chip{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
+    color:var(--amber);border:1px solid rgba(232,179,65,.4);border-radius:99px;
+    padding:4px 11px;text-transform:uppercase;white-space:nowrap;
+  }
+
+  /* ── hero ── */
+  .hero{padding:84px 0 64px;position:relative}
+  .kicker{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--green-50);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .kicker::before{content:"";width:26px;height:1px;background:var(--green-50)}
+  h1{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(38px,6vw,64px);line-height:1.04;letter-spacing:-.015em;
+    color:var(--gs-5);max-width:14ch;
+  }
+  h1 em{font-style:normal;color:var(--green-50)}
+  .hero-sub{
+    margin-top:26px;font-size:19px;color:var(--gs-40);max-width:56ch;font-weight:400;
+  }
+  .hero-sub strong{color:var(--gs-20);font-weight:500}
+  .prepared{
+    margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+  }
+  .prepared .tag{
+    font-family:var(--font-mono);font-size:12px;color:var(--gs-40);
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.1);
+    border-radius:8px;padding:8px 14px;
+  }
+  .prepared .tag b{color:var(--green-50);font-weight:500}
+  /* staggered reveal */
+  .hero > *{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero > *:nth-child(2){animation-delay:.08s}
+  .hero > *:nth-child(3){animation-delay:.16s}
+  .hero > *:nth-child(4){animation-delay:.24s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ── stat band ── */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:rgba(234,234,233,.09);border:1px solid rgba(234,234,233,.09);
+    border-radius:16px;overflow:hidden;margin:10px 0 0;
+  }
+  .stat{background:var(--gs-90);padding:30px 26px;position:relative}
+  .stat .num{
+    font-family:var(--font-display);font-weight:600;font-size:46px;line-height:1;
+    color:var(--gs-5);
+  }
+  .stat .num.green{color:var(--green-50)}
+  .stat .num.amber{color:var(--amber)}
+  .stat .lbl{margin-top:10px;font-size:13.5px;color:var(--gs-60);line-height:1.45}
+  .stat .src{
+    position:absolute;top:14px;right:16px;font-family:var(--font-mono);
+    font-size:9.5px;color:var(--gs-60);letter-spacing:.05em;
+  }
+  .src-real{color:var(--green-60)!important}
+  .src-ill{color:var(--amber)!important}
+
+  /* ── sections ── */
+  section{padding:76px 0 8px}
+  .sec-kicker{
+    font-family:var(--font-mono);font-size:12px;color:var(--green-50);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(27px,3.6vw,38px);
+    line-height:1.12;letter-spacing:-.01em;color:var(--gs-5);max-width:24ch;
+  }
+  .sec-sub{margin-top:14px;color:var(--gs-40);max-width:62ch;font-size:16.5px}
+
+  /* headline finding */
+  .finding{
+    margin-top:44px;border-radius:20px;padding:44px 46px;
+    background:linear-gradient(135deg,var(--green-90) 0%,rgba(8,84,40,.45) 60%,rgba(3,9,20,0) 130%);
+    border:1px solid rgba(34,205,110,.28);position:relative;overflow:hidden;
+  }
+  .finding::after{
+    content:"</>";position:absolute;right:34px;bottom:14px;
+    font-family:var(--font-mono);font-size:120px;color:rgba(34,205,110,.07);font-weight:500;
+  }
+  .finding .big{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3.4vw,34px);
+    line-height:1.2;color:var(--gs-5);max-width:24ch;
+  }
+  .finding .big em{font-style:normal;color:var(--green-40)}
+  .finding p{margin-top:16px;color:var(--green-10);opacity:.85;max-width:58ch;font-size:16px}
+
+  /* ── mix chart (CSS bars) ── */
+  .mix{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  .mixbar{display:flex;flex-direction:column;gap:18px}
+  .mrow{display:grid;grid-template-columns:170px 1fr 56px;gap:16px;align-items:center}
+  .mrow .ml{font-size:14px;color:var(--gs-30);font-weight:500}
+  .mrow .ml span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);margin-top:2px}
+  .track{height:30px;background:var(--gs-80);border-radius:7px;overflow:hidden;position:relative}
+  .fill{
+    height:100%;border-radius:7px;width:0;
+    transition:width 1.1s cubic-bezier(.2,.7,.2,1);
+  }
+  .f-green{background:linear-gradient(90deg,var(--green-70),var(--green-50))}
+  .f-mid{background:linear-gradient(90deg,#8a6d1f,var(--amber))}
+  .f-low{background:linear-gradient(90deg,#7a2f2f,var(--red))}
+  .mrow .mv{font-family:var(--font-mono);font-size:15px;color:var(--gs-20);text-align:right}
+  .mix-note{color:var(--gs-40);font-size:15.5px}
+  .mix-note .pull{
+    font-family:var(--font-display);font-size:24px;font-weight:500;color:var(--gs-5);
+    line-height:1.3;margin-bottom:14px;display:block;max-width:20ch;
+  }
+  .legend{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;color:var(--gs-60)}
+  .dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+  /* ── scorecard table ── */
+  .scard{
+    margin-top:46px;border:1px solid rgba(234,234,233,.1);border-radius:16px;overflow:hidden;
+  }
+  .scard table{width:100%;border-collapse:collapse}
+  .scard th{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gs-60);text-align:left;padding:15px 20px;background:var(--gs-80);
+    border-bottom:1px solid rgba(234,234,233,.1);font-weight:500;
+  }
+  .scard td{
+    padding:15px 20px;border-bottom:1px solid rgba(234,234,233,.06);
+    font-size:14.5px;color:var(--gs-30);vertical-align:middle;
+  }
+  .scard tr:last-child td{border-bottom:none}
+  .scard tr{transition:background .15s}
+  .scard tbody tr:hover{background:rgba(34,205,110,.04)}
+  .role{font-weight:500;color:var(--gs-20)}
+  .role span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);margin-top:3px}
+  .chip{
+    font-family:var(--font-mono);font-size:10.5px;border-radius:6px;padding:4px 9px;
+    white-space:nowrap;font-weight:500;
+  }
+  .chip.yes{color:var(--green-40);background:rgba(34,205,110,.1);border:1px solid rgba(34,205,110,.3)}
+  .chip.part{color:var(--amber);background:rgba(232,179,65,.08);border:1px solid rgba(232,179,65,.3)}
+  .chip.no{color:var(--red);background:rgba(232,93,93,.08);border:1px solid rgba(232,93,93,.3)}
+  .scorebar{display:flex;align-items:center;gap:12px;min-width:170px}
+  .sb-track{flex:1;height:7px;border-radius:4px;background:var(--gs-80);overflow:hidden}
+  .sb-fill{height:100%;border-radius:4px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .sb-num{font-family:var(--font-mono);font-size:13.5px;color:var(--gs-20);width:30px;text-align:right}
+  .table-note{
+    padding:13px 20px;background:var(--gs-80);font-family:var(--font-mono);
+    font-size:10.5px;color:var(--gs-60);letter-spacing:.03em;
+  }
+  .table-note b{color:var(--amber);font-weight:500}
+
+  /* ── benchmark gauge ── */
+  .bench{
+    margin-top:46px;display:grid;grid-template-columns:380px 1fr;gap:60px;align-items:center;
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:20px;
+    padding:48px 50px;
+  }
+  .gauge{position:relative;width:100%;max-width:340px;margin:0 auto}
+  .gauge svg{width:100%;height:auto;display:block;overflow:visible}
+  .gauge .gtxt{
+    position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);text-align:center;
+  }
+  .gauge .gtxt .gv{font-family:var(--font-display);font-weight:600;font-size:54px;color:var(--gs-5);line-height:1}
+  .gauge .gtxt .gl{font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+  .bench-copy h3{
+    font-family:var(--font-display);font-weight:600;font-size:26px;color:var(--gs-5);
+    line-height:1.25;max-width:22ch;
+  }
+  .bench-copy p{margin-top:14px;color:var(--gs-40);font-size:15.5px;max-width:50ch}
+  .bench-copy .rank-line{
+    margin-top:22px;font-family:var(--font-mono);font-size:13px;color:var(--green-40);
+    border-left:2px solid var(--green-50);padding-left:14px;line-height:1.7;
+  }
+  .gmarks{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--gs-60)}
+
+  /* ── cost calculator ── */
+  .calc{
+    margin-top:46px;background:linear-gradient(180deg,var(--gs-80),rgba(15,20,28,.4));
+    border:1px solid rgba(234,234,233,.1);border-radius:20px;padding:48px 50px;
+    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  }
+  .calc-controls .crow{margin-bottom:30px}
+  .calc-controls label{
+    display:flex;justify-content:space-between;font-size:14px;color:var(--gs-30);
+    font-weight:500;margin-bottom:12px;
+  }
+  .calc-controls label output{font-family:var(--font-mono);color:var(--green-40);font-size:14px}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;
+    background:linear-gradient(90deg,var(--green-50) var(--p,50%),var(--gs-80) var(--p,50%));
+    outline:none;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+    background:var(--green-50);border:3px solid var(--gs-90);
+    box-shadow:0 0 0 1.5px var(--green-50),0 0 14px rgba(34,205,110,.5);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:14px;height:14px;border-radius:50%;background:var(--green-50);
+    border:3px solid var(--gs-90);box-shadow:0 0 0 1.5px var(--green-50);
+  }
+  .calc-out{text-align:left;border-left:1px solid rgba(234,234,233,.1);padding-left:56px}
+  .calc-out .co-l{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gs-60)}
+  .calc-out .co-v{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(40px,5vw,58px);
+    color:var(--green-40);line-height:1.05;margin:8px 0 4px;
+  }
+  .calc-out .co-s{font-size:14px;color:var(--gs-40);max-width:34ch}
+  .calc-out .co-sub{
+    margin-top:26px;padding-top:24px;border-top:1px dashed rgba(234,234,233,.12);
+  }
+  .calc-out .co-sub .co-v{font-size:clamp(28px,3.4vw,38px);color:var(--gs-5)}
+
+  /* ── recommendations ── */
+  .recs{margin-top:46px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .rec{
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:16px;
+    padding:30px 28px;transition:border-color .25s,transform .25s;
+  }
+  .rec:hover{border-color:rgba(34,205,110,.35);transform:translateY(-3px)}
+  .rec .rn{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--green-50);letter-spacing:.1em;
+  }
+  .rec h4{
+    font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--gs-5);
+    margin:12px 0 10px;line-height:1.3;
+  }
+  .rec p{font-size:14.5px;color:var(--gs-40)}
+  .rec p b{color:var(--gs-30);font-weight:500}
+
+  /* ── CTA ── */
+  .cta{
+    margin:84px 0 0;border-radius:24px;text-align:center;padding:74px 40px 78px;
+    background:radial-gradient(ellipse 70% 110% at 50% -10%,rgba(34,205,110,.22),transparent 70%),var(--gs-80);
+    border:1px solid rgba(34,205,110,.25);position:relative;overflow:hidden;
+  }
+  .cta h2{max-width:none;font-size:clamp(28px,4vw,42px)}
+  .cta p{margin:18px auto 0;color:var(--gs-40);max-width:52ch}
+  .cta .btn{
+    display:inline-block;margin-top:34px;background:var(--green-50);color:var(--gs-90);
+    font-family:var(--font-body);font-weight:700;font-size:16px;text-decoration:none;
+    padding:16px 36px;border-radius:12px;transition:background .2s,transform .2s;
+  }
+  .cta .btn:hover{background:var(--green-40);transform:translateY(-2px)}
+  .cta .mono-line{
+    margin-top:22px;font-family:var(--font-mono);font-size:12px;color:var(--gs-60);
+  }
+
+  /* ── footer / methodology ── */
+  footer{margin-top:80px;border-top:1px solid rgba(234,234,233,.08);padding:44px 0 64px}
+  .meth{
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:14px;
+    padding:26px 28px;font-size:13.5px;color:var(--gs-40);
+  }
+  .meth h5{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gs-60);margin-bottom:12px;font-weight:500;
+  }
+  .meth ul{list-style:none}
+  .meth li{padding:4px 0 4px 20px;position:relative}
+  .meth li::before{content:"›";position:absolute;left:2px;color:var(--green-60);font-family:var(--font-mono)}
+  .meth b{color:var(--gs-30);font-weight:500}
+  .meth .r{color:var(--green-50);font-family:var(--font-mono);font-size:11px}
+  .meth .i{color:var(--amber);font-family:var(--font-mono);font-size:11px}
+  .foot-row{
+    margin-top:34px;display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:18px;
+  }
+  .foot-row img{height:15px;opacity:.85}
+  .foot-row .by{font-size:13px;color:var(--gs-60)}
+  .foot-row .by b{color:var(--gs-40);font-weight:500}
+
+  /* scroll reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* ── responsive ── */
+  @media (max-width:920px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .mix,.bench,.calc{grid-template-columns:1fr;gap:38px}
+    .calc-out{border-left:none;padding-left:0;border-top:1px solid rgba(234,234,233,.1);padding-top:36px}
+    .recs{grid-template-columns:1fr}
+    .topbar nav{display:none}
+    .scard{overflow-x:auto}
+    .scard table{min-width:640px}
+  }
+
+  /* ── print = clean PDF export ── */
+  @media print{
+    body{background:#fff;color:#1a1d23;font-size:12px}
+    .bg,.sample-chip,.topbar nav,.cta .btn{display:none}
+    header{position:static;background:#fff;border-color:#e5e5e5}
+    h1,h2,.finding .big,.stat .num,.rec h4,.bench-copy h3{color:#0f141c}
+    .stat,.rec,.bench,.calc,.scard,.meth,.finding,.cta{background:#fff;border-color:#ddd}
+    .finding{background:#f2fbf5}
+    section{padding:28px 0 4px;break-inside:avoid}
+    .hero{padding:30px 0 20px}
+    .hero > *{opacity:1;transform:none;animation:none}
+    .rv{opacity:1;transform:none}
+    .stat .lbl,.sec-sub,.mix-note,p{color:#444}
+  }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap topbar">
+    <img src="hackerrank-logo-light.svg" alt="HackerRank">
+    <nav aria-label="Sections">
+      <a href="#footprint">Footprint</a>
+      <a href="#teardown">Teardown</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#cost">Cost</a>
+      <a href="#next">Next steps</a>
+    </nav>
+    <span class="sample-chip">Sample asset · GTM demo</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="kicker">AI-Readiness Teardown · 01</div>
+    <h1>Vanta is hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>
+    <p class="hero-sub">A role-by-role read of Vanta's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.</p>
+    <div class="prepared">
+      <span class="tag">Prepared for <b>David Ko</b> · VP of Engineering, Vanta</span>
+      <span class="tag">$ source: <b>jobs.ashbyhq.com/vanta</b> · pulled 2026-06-09</span>
+      <span class="tag">by Alejo Escriva · HackerRank GTM</span>
+    </div>
+  </div>
+
+  <!-- FOOTPRINT -->
+  <section id="footprint">
+    <div class="sec-kicker">01 · Hiring footprint</div>
+    <h2>The snapshot, from your own careers page</h2>
+    <p class="sec-sub">Everything in this band is pulled live from Vanta's Ashby board. It refreshes when this page rebuilds — this report is a pipeline, not a paper.</p>
+
+    <div class="stats rv" style="margin-top:42px">
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num">118</div><div class="lbl">Total open roles at Vanta</div></div>
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">43</div><div class="lbl">Engineering-titled openings</div></div>
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">5</div><div class="lbl">Explicitly AI roles — incl. 2× Engineering Manager, AI</div></div>
+      <div class="stat"><span class="src src-ill">● MODELED</span><div class="num amber">88%</div><div class="lbl">Of eng JDs with no stated AI-fluency requirement</div></div>
+    </div>
+
+    <div class="finding rv">
+      <div class="big">Finding: <em>38 of 43</em> engineering roles still screen like it's 2019 — while 5 of them exist to build AI products.</div>
+      <p>Vanta is hiring Engineering Managers for AI and Senior AI Product engineers. Every candidate for all 43 roles will use AI assistants daily on the job — yet the requirement sections read algorithm-recall, years-of-framework, pedigree. The gap between what you're hiring <b>for</b> and what you're screening <b>with</b> is the single highest-leverage fix in this pipeline.</p>
+    </div>
+  </section>
+
+  <!-- TEARDOWN -->
+  <section id="teardown">
+    <div class="sec-kicker">02 · The teardown</div>
+    <h2>Role mix: who you say you need vs. how you'll test them</h2>
+
+    <div class="mix rv">
+      <div class="mixbar" id="mixbar">
+        <div class="mrow">
+          <div class="ml">AI-explicit roles<span>EM AI ×2 · Sr AI GRC · AI Product ×2</span></div>
+          <div class="track"><div class="fill f-green" data-w="12%"></div></div>
+          <div class="mv">5</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">AI-adjacent roles<span>platform · data · devex — modeled</span></div>
+          <div class="track"><div class="fill f-mid" data-w="21%"></div></div>
+          <div class="mv">9</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Conventional reqs<span>2019-style screening signals — modeled</span></div>
+          <div class="track"><div class="fill f-low" data-w="67%"></div></div>
+          <div class="mv">29</div>
+        </div>
+      </div>
+      <div class="mix-note">
+        <span class="pull">Your most senior open roles are the least AI-tested.</span>
+        Staff and Senior platform roles carry the highest interview cost per hire — and their JDs lean hardest on credential proxies. The roles where a wrong hire derails a quarter are exactly the ones screened with the least signal.
+        <div class="legend">
+          <span><i class="dot" style="background:var(--green-50)"></i> tests AI fluency</span>
+          <span><i class="dot" style="background:var(--amber)"></i> partial signal</span>
+          <span><i class="dot" style="background:var(--red)"></i> legacy screen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scard rv">
+      <table>
+        <thead>
+          <tr><th>Role (live posting)</th><th>Tests AI fluency?</th><th>Reqs calibrated?</th><th>AI-readiness score</th></tr>
+        </thead>
+        <tbody id="scoretable">
+          <tr><td class="role">Engineering Manager, AI<span>leadership · AI org</span></td><td><span class="chip part">PARTIAL</span></td><td><span class="chip yes">YES</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-green" data-w="74%"></div></div><span class="sb-num">74</span></div></td></tr>
+          <tr><td class="role">Senior Software Engineer, AI Product<span>product eng · AI</span></td><td><span class="chip part">PARTIAL</span></td><td><span class="chip yes">YES</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-green" data-w="68%"></div></div><span class="sb-num">68</span></div></td></tr>
+          <tr><td class="role">Senior AI GRC Engineer<span>security · AI governance</span></td><td><span class="chip part">PARTIAL</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="61%"></div></div><span class="sb-num">61</span></div></td></tr>
+          <tr><td class="role">Staff Software Engineer, Core Platform<span>platform · staff level</span></td><td><span class="chip no">NO</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="44%"></div></div><span class="sb-num">44</span></div></td></tr>
+          <tr><td class="role">Staff Data Engineer<span>data platform · staff level</span></td><td><span class="chip no">NO</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="41%"></div></div><span class="sb-num">41</span></div></td></tr>
+          <tr><td class="role">Senior SWE, Developer Experience<span>devex · tooling</span></td><td><span class="chip no">NO</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="38%"></div></div><span class="sb-num">38</span></div></td></tr>
+          <tr><td class="role">Backend Senior SWE, Identity<span>backend · identity</span></td><td><span class="chip no">NO</span></td><td><span class="chip no">NO</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-low" data-w="29%"></div></div><span class="sb-num">29</span></div></td></tr>
+          <tr><td class="role">Senior Fullstack SWE, GRC<span>fullstack · 2 openings</span></td><td><span class="chip no">NO</span></td><td><span class="chip no">NO</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-low" data-w="27%"></div></div><span class="sb-num">27</span></div></td></tr>
+          <tr><td class="role">Senior SWE, Enterprise Resilience<span>infra · reliability</span></td><td><span class="chip no">NO</span></td><td><span class="chip no">NO</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-low" data-w="25%"></div></div><span class="sb-num">25</span></div></td></tr>
+        </tbody>
+      </table>
+      <div class="table-note">Role titles are live from Ashby (2026-06-09). <b>Scores in this sample are modeled placeholders</b> — the production engine scores each JD's full text with an LLM rubric: AI-fluency signals required, requirement inflation vs. market, signal-to-pedigree ratio. Showing 9 of 43; full table ships in the live version.</div>
+    </div>
+  </section>
+
+  <!-- BENCHMARK -->
+  <section id="benchmark">
+    <div class="sec-kicker">03 · The benchmark</div>
+    <h2>Where Vanta's screening bar sits against 26M+ developers</h2>
+
+    <div class="bench rv">
+      <div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 120">
+            <path d="M14 110 A 86 86 0 0 1 186 110" fill="none" stroke="#212a36" stroke-width="13" stroke-linecap="round"/>
+            <path id="garc" d="M14 110 A 86 86 0 0 1 186 110" fill="none" stroke="url(#ggrad)" stroke-width="13" stroke-linecap="round"
+                  stroke-dasharray="270.2" stroke-dashoffset="270.2"/>
+            <defs>
+              <linearGradient id="ggrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#10843e"/><stop offset="100%" stop-color="#22cd6e"/>
+              </linearGradient>
+            </defs>
+            <!-- markers -->
+            <g font-family="Roboto Mono" font-size="8" fill="#6a6d71">
+              <text x="6" y="119">0</text><text x="183" y="119">100</text>
+            </g>
+          </svg>
+          <div class="gtxt"><div class="gv" id="gv">0</div><div class="gl">AI-readiness · modeled</div></div>
+        </div>
+        <div class="gmarks"><span>industry median: 31</span><span>AI-era leaders: 78</span></div>
+      </div>
+      <div class="bench-copy">
+        <h3>A score means nothing. A rank against the live market means everything.</h3>
+        <p>HackerRank's 26M-developer community is the calibration set for what "good" looks like right now — including how strong engineers actually work with AI assistants. That's the difference between grading candidates in a vacuum and ranking them against the market you're hiring from.</p>
+        <div class="rank-line">// they return a score.<br>// we return a rank against 26M real developers.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COST -->
+  <section id="cost">
+    <div class="sec-kicker">04 · What the status quo costs</div>
+    <h2>The interview-hours bill for these 43 reqs</h2>
+    <p class="sec-sub">Drag the sliders to your real numbers. Defaults are conservative industry figures — this is the part a PDF couldn't do.</p>
+
+    <div class="calc rv">
+      <div class="calc-controls">
+        <div class="crow">
+          <label>Open engineering reqs <output id="o-roles">43</output></label>
+          <input type="range" id="r-roles" min="5" max="80" value="43">
+        </div>
+        <div class="crow">
+          <label>Senior-engineer interview hours per filled role <output id="o-hours">22 h</output></label>
+          <input type="range" id="r-hours" min="8" max="45" value="22">
+        </div>
+        <div class="crow" style="margin-bottom:0">
+          <label>Loaded cost per senior-eng hour <output id="o-rate">$125</output></label>
+          <input type="range" id="r-rate" min="80" max="220" value="125" step="5">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="co-l">Senior engineering hours consumed</div>
+        <div class="co-v" id="c-hours">946 h</div>
+        <div class="co-s">to fill the current req load — shipping capacity that never reaches the roadmap.</div>
+        <div class="co-sub">
+          <div class="co-l">At loaded cost</div>
+          <div class="co-v" id="c-cost">$118,250</div>
+          <div class="co-s">before counting the false positives a low-signal screen sends to onsite.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section id="next">
+    <div class="sec-kicker">05 · What we'd do first</div>
+    <h2>Three moves, highest leverage first</h2>
+
+    <div class="recs rv">
+      <div class="rec">
+        <span class="rn">/01</span>
+        <h4>Screen the 5 AI roles the way they'll work</h4>
+        <p>Run candidates through <b>AI-assisted assessments</b> — AI assistant on, like the actual job — and score how they reason, iterate, and verify. The irony of hiring AI builders through an AI-blind loop disappears overnight.</p>
+      </div>
+      <div class="rec">
+        <span class="rn">/02</span>
+        <h4>Replace round one for the 29 legacy-screened roles</h4>
+        <p>A structured assessment <b>replaces a round, it doesn't add one</b>. Benchmarked against 26M developers, it returns a defensible rank — and hands your senior ICs their interview hours back.</p>
+      </div>
+      <div class="rec">
+        <span class="rn">/03</span>
+        <h4>Make the hiring record audit-ready</h4>
+        <p>Vanta sells trust; its hiring bar should be defensible too. A <b>percentile rank is an artifact</b> legal and compliance can stand behind — the same shape Vanguard used to cut interview rounds without lowering the bar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta rv">
+    <h2>Want all 43 roles scored for real?</h2>
+    <p>The full teardown runs every Vanta JD through the live rubric and refreshes weekly while the reqs are open. It exists — it just needs a yes.</p>
+    <a class="btn" href="mailto:alejoescriva@gmail.com?subject=Vanta%20teardown%20—%20full%20version">Reply &amp; get the full teardown</a>
+    <div class="mono-line">$ no meeting required — it arrives as a link, like this one</div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="meth">
+      <h5>Methodology &amp; data provenance</h5>
+      <ul>
+        <li><span class="r">REAL</span> &nbsp;Role counts and titles: Vanta public Ashby board (<b>jobs.ashbyhq.com/vanta</b>), pulled 2026-06-09 — 118 total openings, 43 engineering-titled, 5 explicitly AI.</li>
+        <li><span class="r">REAL</span> &nbsp;Benchmark infrastructure: HackerRank's 26M+ developer community; customer proof points (Vanguard, Atlassian, DoorDash) from public case studies.</li>
+        <li><span class="i">MODELED</span> &nbsp;Per-role AI-readiness scores, role-mix classification, the 88% figure, and benchmark gauge values are illustrative placeholders for this sample. In production they're generated per-JD by an LLM scoring rubric.</li>
+        <li><span class="i">MODELED</span> &nbsp;Cost model: defaults are industry-conservative; the sliders exist so you can use your real numbers.</li>
+      </ul>
+    </div>
+    <div class="foot-row">
+      <img src="hackerrank-logo-light.svg" alt="HackerRank">
+      <span class="by">Sample permissionless-value asset · built by <b>Alejo Escriva</b> for the HackerRank GTM take-home · not an official HackerRank publication</span>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // scroll reveal
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // animate bars when visible
+  const bars = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-w]').forEach((f, i) =>
+        setTimeout(() => f.style.width = f.dataset.w, 120 * i + 150));
+      bars.unobserve(e.target);
+    }
+  }), { threshold: .3 });
+  document.querySelectorAll('#mixbar, #scoretable').forEach(el => bars.observe(el));
+
+  // gauge animation (modeled value: 36/100)
+  const TARGET = 36, ARC = 270.2;
+  const gaugeIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    gaugeIO.unobserve(e.target);
+    const arc = document.getElementById('garc'), gv = document.getElementById('gv');
+    const t0 = performance.now(), dur = 1400;
+    (function tick(t) {
+      const p = Math.min((t - t0) / dur, 1), ease = 1 - Math.pow(1 - p, 3);
+      arc.style.strokeDashoffset = ARC - (ARC * (TARGET / 100) * ease);
+      gv.textContent = Math.round(TARGET * ease);
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  }), { threshold: .4 });
+  gaugeIO.observe(document.querySelector('.gauge'));
+
+  // cost calculator
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString('en-US');
+  function calc() {
+    const roles = +$('r-roles').value, hours = +$('r-hours').value, rate = +$('r-rate').value;
+    $('o-roles').textContent = roles;
+    $('o-hours').textContent = hours + ' h';
+    $('o-rate').textContent = '$' + rate;
+    $('c-hours').textContent = fmt(roles * hours) + ' h';
+    $('c-cost').textContent = '$' + fmt(roles * hours * rate);
+    ['r-roles','r-hours','r-rate'].forEach(id => {
+      const el = $(id), p = (el.value - el.min) / (el.max - el.min) * 100;
+      el.style.setProperty('--p', p + '%');
+    });
+  }
+  ['r-roles','r-hours','r-rate'].forEach(id => $(id).addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>

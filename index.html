@@ -70,6 +70,47 @@
     color:var(--amber);border:1px solid rgba(232,179,65,.4);border-radius:99px;
     padding:4px 11px;text-transform:uppercase;white-space:nowrap;
   }
+  .top-right{display:flex;align-items:center;gap:14px}
+  .btn-sm{
+    display:inline-block;background:var(--green-50);color:var(--gs-90);
+    font-weight:700;font-size:13px;text-decoration:none;padding:9px 18px;
+    border-radius:9px;transition:background .2s;white-space:nowrap;
+  }
+  .btn-sm:hover{background:var(--green-40)}
+
+  /* inline mid-funnel banner */
+  .inline-cta{
+    margin-top:22px;display:flex;align-items:center;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(34,205,110,.1),rgba(34,205,110,.02));
+    border:1px solid rgba(34,205,110,.25);border-radius:14px;padding:20px 26px;
+  }
+  .inline-cta .ic-t{font-family:var(--font-display);font-weight:500;font-size:18px;color:var(--gs-5)}
+  .inline-cta .ic-t b{color:var(--green-40);font-weight:600}
+  .inline-cta a{
+    color:var(--green-40);font-weight:700;font-size:14.5px;text-decoration:none;
+    white-space:nowrap;border-bottom:1.5px solid rgba(74,216,136,.4);
+    padding-bottom:2px;transition:border-color .2s;
+  }
+  .inline-cta a:hover{border-color:var(--green-40)}
+
+  /* product links on rec cards */
+  .rec{display:flex;flex-direction:column}
+  .rec .rlink{
+    margin-top:auto;padding-top:18px;font-size:13.5px;font-weight:700;
+    color:var(--green-50);text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+    transition:gap .2s;
+  }
+  .rec .rlink:hover{gap:11px}
+  .rec .rlink::after{content:"→"}
+
+  .btn-ghost{
+    display:inline-block;margin-top:34px;background:transparent;color:var(--gs-20);
+    font-weight:700;font-size:16px;text-decoration:none;padding:15px 32px;
+    border-radius:12px;border:1.5px solid rgba(234,234,233,.25);
+    transition:border-color .2s,color .2s,transform .2s;margin-left:14px;
+  }
+  .btn-ghost:hover{border-color:var(--green-50);color:var(--green-40);transform:translateY(-2px)}
 
   /* ── hero ── */
   .hero{padding:84px 0 64px;position:relative}
@@ -354,7 +395,7 @@
   /* ── print = clean PDF export ── */
   @media print{
     body{background:#fff;color:#1a1d23;font-size:12px}
-    .bg,.sample-chip,.topbar nav,.cta .btn{display:none}
+    .bg,.sample-chip,.topbar nav,.cta .btn,.btn-sm,.btn-ghost,.inline-cta{display:none}
     header{position:static;background:#fff;border-color:#e5e5e5}
     h1,h2,.finding .big,.stat .num,.rec h4,.bench-copy h3{color:#0f141c}
     .stat,.rec,.bench,.calc,.scard,.meth,.finding,.cta{background:#fff;border-color:#ddd}
@@ -380,7 +421,10 @@
       <a href="#cost">Cost</a>
       <a href="#next">Next steps</a>
     </nav>
-    <span class="sample-chip">Sample asset · GTM demo</span>
+    <div class="top-right">
+      <span class="sample-chip">Sample asset · GTM demo</span>
+      <a class="btn-sm" href="#cta">Get the full teardown</a>
+    </div>
   </div>
 </header>
 
@@ -470,6 +514,11 @@
       </table>
       <div class="table-note">Role titles are live from Ashby (2026-06-09). <b>Scores in this sample are modeled placeholders</b> — the production engine scores each JD's full text with an LLM rubric: AI-fluency signals required, requirement inflation vs. market, signal-to-pedigree ratio. Showing 9 of 43; full table ships in the live version.</div>
     </div>
+
+    <div class="inline-cta rv">
+      <span class="ic-t">This is <b>9 of 43</b> roles. The other 34 are one reply away.</span>
+      <a href="#cta">Get the full scorecard</a>
+    </div>
   </section>
 
   <!-- BENCHMARK -->
@@ -550,26 +599,30 @@
         <span class="rn">/01</span>
         <h4>Screen the 5 AI roles the way they'll work</h4>
         <p>Run candidates through <b>AI-assisted assessments</b> — AI assistant on, like the actual job — and score how they reason, iterate, and verify. The irony of hiring AI builders through an AI-blind loop disappears overnight.</p>
+        <a class="rlink" href="https://www.hackerrank.com/ai?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness" target="_blank" rel="noopener">See AI-era assessments</a>
       </div>
       <div class="rec">
         <span class="rn">/02</span>
         <h4>Replace round one for the 29 legacy-screened roles</h4>
         <p>A structured assessment <b>replaces a round, it doesn't add one</b>. Benchmarked against 26M developers, it returns a defensible rank — and hands your senior ICs their interview hours back.</p>
+        <a class="rlink" href="https://www.hackerrank.com/products/screen/?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness" target="_blank" rel="noopener">How Screen replaces a round</a>
       </div>
       <div class="rec">
         <span class="rn">/03</span>
         <h4>Make the hiring record audit-ready</h4>
         <p>Vanta sells trust; its hiring bar should be defensible too. A <b>percentile rank is an artifact</b> legal and compliance can stand behind — the same shape Vanguard used to cut interview rounds without lowering the bar.</p>
+        <a class="rlink" href="https://www.hackerrank.com/customers?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness" target="_blank" rel="noopener">See how Vanguard did it</a>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <div class="cta rv">
+  <div class="cta rv" id="cta">
     <h2>Want all 43 roles scored for real?</h2>
-    <p>The full teardown runs every Vanta JD through the live rubric and refreshes weekly while the reqs are open. It exists — it just needs a yes.</p>
-    <a class="btn" href="mailto:alejoescriva@gmail.com?subject=Vanta%20teardown%20—%20full%20version">Reply &amp; get the full teardown</a>
-    <div class="mono-line">$ no meeting required — it arrives as a link, like this one</div>
+    <p>The full teardown runs every Vanta JD through the live rubric and refreshes weekly while the reqs are open. It exists — it just needs a yes. Prefer to skip ahead? See the platform that does the scoring.</p>
+    <a class="btn" href="mailto:alejoescriva@gmail.com?subject=Vanta%20teardown%20—%20send%20the%20full%20version">Reply &amp; get the full teardown</a>
+    <a class="btn-ghost" href="https://www.hackerrank.com/demo?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness" target="_blank" rel="noopener">Book a 15-min walkthrough</a>
+    <div class="mono-line">$ no meeting required for the teardown — it arrives as a link, like this one</div>
   </div>
 
   <!-- FOOTER -->
@@ -592,27 +645,16 @@
 </main>
 
 <script>
-  // scroll reveal
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { threshold: .15 });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  // scroll-position reveal (no IntersectionObserver — survives throttled/headless browsers)
+  const pending = {
+    rv: [...document.querySelectorAll('.rv')],
+    bars: [...document.querySelectorAll('#mixbar, #scoretable')],
+    gauge: document.querySelector('.gauge')
+  };
+  const seen = el => el.getBoundingClientRect().top < innerHeight * .88;
 
-  // animate bars when visible
-  const bars = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('[data-w]').forEach((f, i) =>
-        setTimeout(() => f.style.width = f.dataset.w, 120 * i + 150));
-      bars.unobserve(e.target);
-    }
-  }), { threshold: .3 });
-  document.querySelectorAll('#mixbar, #scoretable').forEach(el => bars.observe(el));
-
-  // gauge animation (modeled value: 36/100)
-  const TARGET = 36, ARC = 270.2;
-  const gaugeIO = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    gaugeIO.unobserve(e.target);
+  function animateGauge() {
+    const TARGET = 36, ARC = 270.2;
     const arc = document.getElementById('garc'), gv = document.getElementById('gv');
     const t0 = performance.now(), dur = 1400;
     (function tick(t) {
@@ -621,8 +663,33 @@
       gv.textContent = Math.round(TARGET * ease);
       if (p < 1) requestAnimationFrame(tick);
     })(t0);
-  }), { threshold: .4 });
-  gaugeIO.observe(document.querySelector('.gauge'));
+    // belt-and-braces: if rAF is paused (hidden tab / print), land on final value
+    setTimeout(() => {
+      arc.style.strokeDashoffset = ARC - ARC * (TARGET / 100);
+      gv.textContent = TARGET;
+    }, dur + 200);
+  }
+
+  function checkReveals() {
+    pending.rv = pending.rv.filter(el => !seen(el) || (el.classList.add('in'), false));
+    pending.bars = pending.bars.filter(el => {
+      if (!seen(el)) return true;
+      el.querySelectorAll('[data-w]').forEach((f, i) =>
+        setTimeout(() => f.style.width = f.dataset.w, 120 * i + 150));
+      return false;
+    });
+    if (pending.gauge && seen(pending.gauge)) { animateGauge(); pending.gauge = null; }
+    if (!pending.rv.length && !pending.bars.length && !pending.gauge) {
+      removeEventListener('scroll', checkReveals);
+      removeEventListener('resize', checkReveals);
+      clearInterval(sweep);
+    }
+  }
+  addEventListener('scroll', checkReveals, { passive: true });
+  addEventListener('resize', checkReveals, { passive: true });
+  // interval sweep: catches scroll restoration and anchor jumps that fire no scroll event
+  const sweep = setInterval(checkReveals, 350);
+  checkReveals();
 
   // cost calculator
   const $ = id => document.getElementById(id);

@@ -51,6 +51,84 @@
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
+  /* ── banding: dark / gradient transition / light, like hackerrank.com ── */
+  .band-dark{position:relative}
+  .band-light{
+    position:relative;
+    background:linear-gradient(180deg,#f7f9fd 0%,#eef1f9 55%,#e9eef8 100%);
+  }
+  .t-dark-light{
+    height:320px;
+    background:linear-gradient(180deg,#030914 0%,#0b2438 26%,#467d9e 52%,#a8cde0 72%,#e3edf5 88%,#f7f9fd 100%);
+  }
+  .t-light-dark{
+    height:320px;
+    background:linear-gradient(180deg,#e9eef8 0%,#a9d6d4 28%,#2e8b8b 52%,#0a3540 76%,#030914 100%);
+  }
+
+  /* starfield (hero, matches their navy night-sky hero) */
+  .stars{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 18%,rgba(255,255,255,.8),transparent),
+      radial-gradient(1.2px 1.2px at 21% 64%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.8px 1.8px at 33% 30%,rgba(255,255,255,.65),transparent),
+      radial-gradient(1.1px 1.1px at 44% 76%,rgba(255,255,255,.45),transparent),
+      radial-gradient(1.5px 1.5px at 56% 14%,rgba(255,255,255,.7),transparent),
+      radial-gradient(1.2px 1.2px at 64% 52%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.9px 1.9px at 73% 26%,rgba(255,255,255,.75),transparent),
+      radial-gradient(1.1px 1.1px at 81% 70%,rgba(255,255,255,.4),transparent),
+      radial-gradient(1.4px 1.4px at 90% 38%,rgba(255,255,255,.6),transparent),
+      radial-gradient(1.2px 1.2px at 96% 82%,rgba(255,255,255,.45),transparent),
+      radial-gradient(1.3px 1.3px at 15% 88%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.6px 1.6px at 49% 92%,rgba(255,255,255,.55),transparent);
+    animation:twinkle 5s ease-in-out infinite alternate;
+    mask-image:linear-gradient(180deg,#000 70%,transparent);
+  }
+  @keyframes twinkle{from{opacity:.55}to{opacity:1}}
+
+  /* live pulse indicator */
+  .pulse{
+    width:8px;height:8px;border-radius:50%;background:var(--green-50);
+    display:inline-block;flex-shrink:0;animation:pulse 1.9s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(34,205,110,.55)}
+    70%{box-shadow:0 0 0 9px rgba(34,205,110,0)}
+    100%{box-shadow:0 0 0 0 rgba(34,205,110,0)}
+  }
+  .tag-live{display:inline-flex;align-items:center;gap:9px}
+
+  /* ── light-band overrides (teardown section) ── */
+  .band-light .sec-kicker{color:var(--green-70)}
+  .band-light h2{color:#0f141c}
+  .band-light .sec-sub{color:#5b6168}
+  .band-light .mrow .ml{color:#30343b}
+  .band-light .mrow .ml span{color:#8a8f96}
+  .band-light .track,.band-light .sb-track{background:#e2e6ee}
+  .band-light .mrow .mv,.band-light .sb-num{color:#0f141c}
+  .band-light .mix-note{color:#5b6168}
+  .band-light .mix-note .pull{color:#0f141c}
+  .band-light .legend span{color:#8a8f96}
+  .band-light .scard{border-color:#dfe3ea;background:#fff;box-shadow:0 24px 60px rgba(15,20,28,.08)}
+  .band-light .scard th{background:#f4f6f9;color:#8a8f96;border-color:#e7eaef}
+  .band-light .scard td{color:#43484f;border-color:#eef0f4}
+  .band-light .scard tbody tr:hover{background:rgba(16,132,62,.045)}
+  .band-light .role{color:#0f141c}
+  .band-light .role span{color:#9aa0a7}
+  .band-light .chip.yes{color:#10843e;background:rgba(16,132,62,.08);border-color:rgba(16,132,62,.3)}
+  .band-light .chip.part{color:#8a6a14;background:rgba(232,179,65,.13);border-color:rgba(176,134,32,.35)}
+  .band-light .chip.no{color:#b04343;background:rgba(232,93,93,.09);border-color:rgba(206,93,93,.35)}
+  .band-light .table-note{background:#f4f6f9;color:#8a8f96}
+  .band-light .table-note b{color:#8a6a14}
+  .band-light .inline-cta{
+    background:linear-gradient(90deg,rgba(16,132,62,.08),rgba(16,132,62,.015));
+    border-color:rgba(16,132,62,.3);
+  }
+  .band-light .inline-cta .ic-t{color:#0f141c}
+  .band-light .inline-cta .ic-t b{color:#10843e}
+  .band-light .inline-cta a{color:#10843e;border-color:rgba(16,132,62,.35)}
+
   /* ── top bar ── */
   header{
     position:sticky;top:0;z-index:50;
@@ -125,7 +203,10 @@
     font-size:clamp(38px,6vw,64px);line-height:1.04;letter-spacing:-.015em;
     color:var(--gs-5);max-width:14ch;
   }
-  h1 em{font-style:normal;color:var(--green-50)}
+  h1 em{
+    font-style:normal;color:var(--green-30);
+    font-family:var(--font-mono);font-weight:500;font-size:.88em;letter-spacing:-.02em;
+  }
   .hero-sub{
     margin-top:26px;font-size:19px;color:var(--gs-40);max-width:56ch;font-weight:400;
   }
@@ -395,7 +476,9 @@
   /* ── print = clean PDF export ── */
   @media print{
     body{background:#fff;color:#1a1d23;font-size:12px}
-    .bg,.sample-chip,.topbar nav,.cta .btn,.btn-sm,.btn-ghost,.inline-cta{display:none}
+    .bg,.sample-chip,.topbar nav,.cta .btn,.btn-sm,.btn-ghost,.inline-cta,
+    .stars,.t-dark-light,.t-light-dark{display:none}
+    .band-light{background:#fff}
     header{position:static;background:#fff;border-color:#e5e5e5}
     h1,h2,.finding .big,.stat .num,.rec h4,.bench-copy h3{color:#0f141c}
     .stat,.rec,.bench,.calc,.scard,.meth,.finding,.cta{background:#fff;border-color:#ddd}
@@ -428,14 +511,18 @@
   </div>
 </header>
 
-<main class="wrap">
+<main>
+<div class="band-dark">
+<div class="stars" aria-hidden="true"></div>
+<div class="wrap">
 
   <!-- HERO -->
   <div class="hero">
-    <div class="kicker">AI-Readiness Teardown · 01</div>
-    <h1>Vanta is hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>
+    <div class="kicker">AI-Readiness Teardown · June 11, 2026</div>
+    <h1>Hey David — you're hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>
     <p class="hero-sub">A role-by-role read of Vanta's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.</p>
     <div class="prepared">
+      <span class="tag tag-live"><i class="pulse"></i> Generated <b>June 11, 2026</b> · refreshes while your reqs are open</span>
       <span class="tag">Prepared for <b>David Ko</b> · VP of Engineering, Vanta</span>
       <span class="tag">$ source: <b>jobs.ashbyhq.com/vanta</b> · pulled 2026-06-09</span>
       <span class="tag">by Alejo Escriva · HackerRank GTM</span>
@@ -461,8 +548,16 @@
     </div>
   </section>
 
+</div><!-- /wrap -->
+</div><!-- /band-dark -->
+
+<div class="t-dark-light" aria-hidden="true"></div>
+
+<div class="band-light">
+<div class="wrap">
+
   <!-- TEARDOWN -->
-  <section id="teardown">
+  <section id="teardown" style="padding-top:10px">
     <div class="sec-kicker">02 · The teardown</div>
     <h2>Role mix: who you say you need vs. how you'll test them</h2>
 
@@ -521,8 +616,17 @@
     </div>
   </section>
 
+  <div style="height:60px"></div>
+</div><!-- /wrap -->
+</div><!-- /band-light -->
+
+<div class="t-light-dark" aria-hidden="true"></div>
+
+<div class="band-dark">
+<div class="wrap">
+
   <!-- BENCHMARK -->
-  <section id="benchmark">
+  <section id="benchmark" style="padding-top:10px">
     <div class="sec-kicker">03 · The benchmark</div>
     <h2>Where Vanta's screening bar sits against 26M+ developers</h2>
 
@@ -642,6 +746,8 @@
     </div>
   </footer>
 
+</div><!-- /wrap -->
+</div><!-- /band-dark -->
 </main>
 
 <script>

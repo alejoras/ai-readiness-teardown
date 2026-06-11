@@ -689,7 +689,7 @@
   <section id="cost">
     <div class="sec-kicker">04 · What the status quo costs</div>
     <h2>The interview-hours bill for these 43 reqs</h2>
-    <p class="sec-sub">Drag the sliders to your real numbers. Defaults are conservative industry figures — this is the part a PDF couldn't do.</p>
+    <p class="sec-sub">Defaults use Ashby's 2026 benchmark: engineering averages <b style="color:var(--gs-20)">24.7 interview hours per hire</b>, nearly twice the hours of business roles (109M applications analyzed). Drag the sliders to your real numbers. This is the part a PDF couldn't do.</p>
 
     <div class="calc rv">
       <div class="calc-controls">
@@ -698,8 +698,11 @@
           <input type="range" id="r-roles" min="5" max="80" value="43">
         </div>
         <div class="crow">
-          <label>Senior-engineer interview hours per filled role <output id="o-hours">22 h</output></label>
-          <input type="range" id="r-hours" min="8" max="45" value="22">
+          <label>Interview hours per filled eng role <output id="o-hours">25 h</output></label>
+          <input type="range" id="r-hours" min="8" max="45" value="25">
+          <div style="margin-top:9px;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60)">
+            $ default from <a href="https://www.ashbyhq.com/talent-trends-report/reports/2023-recruiter-productivity-trends-report" target="_blank" rel="noopener" style="color:var(--green-60)">Ashby Talent Trends 2026</a>: 24.7 h per eng hire, your own ATS's benchmark
+          </div>
         </div>
         <div class="crow" style="margin-bottom:0">
           <label>Loaded cost per senior-eng hour <output id="o-rate">$125</output></label>
@@ -763,7 +766,7 @@
         <li><span class="r">REAL</span> &nbsp;Role counts and titles: Vanta public Ashby board (<b>jobs.ashbyhq.com/vanta</b>), pulled 2026-06-09 — 118 total openings, 43 engineering-titled, 5 explicitly AI.</li>
         <li><span class="r">REAL</span> &nbsp;Benchmark infrastructure: HackerRank's 26M+ developer community; customer proof points (Vanguard, Atlassian, DoorDash) from public case studies.</li>
         <li><span class="i">MODELED</span> &nbsp;Per-role AI-readiness scores, role-mix classification, the 88% figure, and benchmark gauge values are illustrative placeholders for this sample. In production they're generated per-JD by an LLM scoring rubric.</li>
-        <li><span class="i">MODELED</span> &nbsp;Cost model: defaults are industry-conservative; the sliders exist so you can use your real numbers.</li>
+        <li><span class="r">REAL</span> &nbsp;Cost-model default: 24.7 interview hours per engineering hire, from Ashby's 2026 Talent Trends Report (109M applications, 247K jobs, Jan 2021 to Mar 2026). Loaded hourly rate stays adjustable; sliders exist for your real numbers.</li>
       </ul>
     </div>
     <div class="foot-row">

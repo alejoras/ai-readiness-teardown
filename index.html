@@ -244,6 +244,67 @@
   .hero > *:nth-child(5){animation-delay:.32s}
   @keyframes rise{to{opacity:1;transform:none}}
 
+  /* ── customer logo marquee ── */
+  .marquee{padding:26px 0 4px}
+  .mq-label{
+    font-family:var(--font-mono);font-size:11px;color:var(--gs-60);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px;
+  }
+  .mq-viewport{
+    overflow:hidden;
+    mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  }
+  .mq-track{display:flex;align-items:center;width:max-content;animation:mq 38s linear infinite}
+  .mq-set{display:flex;align-items:center;gap:74px;padding-right:74px}
+  .mq-set img{height:23px;display:block;filter:brightness(0) invert(1);opacity:.48;transition:opacity .2s}
+  .mq-set img:hover{opacity:.9}
+  @keyframes mq{to{transform:translateX(-50%)}}
+
+  /* ── demo form (mirrors hackerrank.com/request-demo) ── */
+  .demo{margin:84px 0 0;display:grid;grid-template-columns:1fr 1.08fr;gap:64px;align-items:start}
+  .demo-copy h2 em{
+    font-style:normal;font-family:var(--font-mono);font-weight:500;
+    color:var(--green-40);font-size:.92em;
+  }
+  .demo-copy .checks{list-style:none;margin-top:30px;display:flex;flex-direction:column;gap:15px}
+  .demo-copy .checks li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--gs-30)}
+  .demo-copy .checks .ck{
+    width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;
+    background:var(--green-50);color:var(--gs-90);font-size:12px;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .demo-copy .alt-line{margin-top:30px;font-size:14px;color:var(--gs-60)}
+  .demo-copy .alt-line a{color:var(--green-40);font-weight:700;text-decoration:none}
+  .demo-copy .alt-line a:hover{text-decoration:underline}
+  .form-card{
+    background:linear-gradient(160deg,#0e1626 0%,#090e18 45%,#070b13 100%);
+    border:1px solid rgba(234,234,233,.11);border-radius:18px;padding:34px 32px 30px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }
+  .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .f-field{display:flex;flex-direction:column;gap:7px}
+  .f-field.full{grid-column:1/-1}
+  .f-field label{font-size:12.5px;font-weight:700;color:var(--gs-20)}
+  .f-field input,.f-field select{
+    background:#0b101c;border:1px solid rgba(234,234,233,.15);border-radius:8px;
+    padding:11px 13px;color:var(--gs-5);font-family:var(--font-body);font-size:14px;
+    outline:none;transition:border-color .2s;width:100%;appearance:auto;
+  }
+  .f-field input::placeholder{color:var(--gs-60)}
+  .f-field input:focus,.f-field select:focus{border-color:var(--green-50)}
+  .f-privacy{font-size:13px;color:var(--gs-40);margin-top:16px;line-height:1.5}
+  .f-privacy a{color:var(--green-40);text-decoration:none}
+  .f-btn{
+    width:100%;margin-top:16px;background:var(--green-60);color:#fff;border:none;
+    border-radius:9px;padding:15px;font-family:var(--font-body);font-weight:700;
+    font-size:15.5px;cursor:pointer;transition:background .2s,transform .15s;
+  }
+  .f-btn:hover{background:var(--green-50);color:var(--gs-90);transform:translateY(-1px)}
+  .f-prefill{
+    margin-top:13px;font-family:var(--font-mono);font-size:10.5px;color:var(--green-60);
+    text-align:center;letter-spacing:.02em;
+  }
+
   /* ── stat band ── */
   .stats{
     display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
@@ -482,7 +543,7 @@
   /* ── responsive ── */
   @media (max-width:920px){
     .stats{grid-template-columns:repeat(2,1fr)}
-    .mix,.bench,.calc{grid-template-columns:1fr;gap:38px}
+    .mix,.bench,.calc,.demo{grid-template-columns:1fr;gap:38px}
     .calc-out{border-left:none;padding-left:0;border-top:1px solid rgba(234,234,233,.1);padding-top:36px}
     .recs{grid-template-columns:1fr}
     .topbar nav{display:none}
@@ -494,7 +555,9 @@
   @media print{
     body{background:#fff;color:#1a1d23;font-size:12px}
     .bg,.sample-chip,.topbar nav,.cta .btn,.btn-sm,.btn-ghost,.inline-cta,
-    .stars,.t-dark-light,.t-light-dark{display:none}
+    .stars,.t-dark-light,.t-light-dark,.marquee,.form-card{display:none}
+    .demo{grid-template-columns:1fr}
+    .demo-copy h2,.demo-copy .checks li{color:#0f141c}
     .band-light{background:#fff}
     header{position:static;background:#fff;border-color:#e5e5e5}
     h1,h2,.finding .big,.stat .num,.rec h4,.bench-copy h3{color:#0f141c}
@@ -552,6 +615,21 @@
       <span class="tag">Prepared for <b>David Ko</b> · VP of Engineering, Vanta</span>
       <span class="tag">$ source: <b>jobs.ashbyhq.com/vanta</b> · pulled 2026-06-09</span>
       <span class="tag">by Alejo Escriva · HackerRank GTM</span>
+    </div>
+  </div>
+
+  <!-- CUSTOMER LOGO MARQUEE -->
+  <div class="marquee" aria-label="Companies hiring with HackerRank">
+    <div class="mq-label">$ the teams you benchmark against already hire this way</div>
+    <div class="mq-viewport">
+      <div class="mq-track">
+        <div class="mq-set">
+          <img src="logos/airbnb.svg" alt="Airbnb"><img src="logos/stripe.svg" alt="Stripe"><img src="logos/atlassian.svg" alt="Atlassian"><img src="logos/doordash.svg" alt="DoorDash"><img src="logos/ibm.svg" alt="IBM"><img src="logos/adobe.svg" alt="Adobe"><img src="logos/paypal.svg" alt="PayPal"><img src="logos/goldmansachs.svg" alt="Goldman Sachs"><img src="logos/canva.svg" alt="Canva"><img src="logos/linkedin.svg" alt="LinkedIn">
+        </div>
+        <div class="mq-set" aria-hidden="true">
+          <img src="logos/airbnb.svg" alt=""><img src="logos/stripe.svg" alt=""><img src="logos/atlassian.svg" alt=""><img src="logos/doordash.svg" alt=""><img src="logos/ibm.svg" alt=""><img src="logos/adobe.svg" alt=""><img src="logos/paypal.svg" alt=""><img src="logos/goldmansachs.svg" alt=""><img src="logos/canva.svg" alt=""><img src="logos/linkedin.svg" alt="">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -749,13 +827,75 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <div class="cta rv" id="cta">
-    <h2>Want all 43 roles scored for real?</h2>
-    <p>The full teardown runs every Vanta JD through the live rubric and refreshes weekly while the reqs are open. It exists — it just needs a yes. Prefer to skip ahead? See the platform that does the scoring.</p>
-    <a class="btn" href="mailto:alejoescriva@gmail.com?subject=Vanta%20teardown%20—%20send%20the%20full%20version">Reply &amp; get the full teardown</a>
-    <a class="btn-ghost" href="https://www.hackerrank.com/demo?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness" target="_blank" rel="noopener">Book a 15-min walkthrough</a>
-    <div class="mono-line">$ no meeting required for the teardown — it arrives as a link, like this one</div>
+  <!-- CTA: request-demo form, pre-filled from the same data that built the page -->
+  <div class="demo rv" id="cta">
+    <div class="demo-copy">
+      <div class="sec-kicker">06 · Next step</div>
+      <h2>See HackerRank <em>in action</em> on your 43 roles</h2>
+      <p class="sec-sub">A live, personalized demo with a product expert. For Vanta, we'd cover:</p>
+      <ul class="checks">
+        <li><span class="ck">✓</span> Screen: AI-era assessments for the 38 roles still on legacy screens</li>
+        <li><span class="ck">✓</span> Interview: pair-programming environments that mirror how your team actually builds</li>
+        <li><span class="ck">✓</span> The benchmark: every result ranked against 26M+ developers, audit-ready</li>
+        <li><span class="ck">✓</span> SkillUp: map the AI skills already inside your org before the next req opens</li>
+      </ul>
+      <p class="alt-line">Not ready for a call? <a href="mailto:alejoescriva@gmail.com?subject=Vanta%20teardown%20—%20send%20the%20full%20version">Reply and get all 43 roles scored instead</a> — no meeting required.</p>
+    </div>
+    <form class="form-card" id="demoform" novalidate>
+      <div class="f-grid">
+        <div class="f-field full">
+          <label for="f-email">Business Email*</label>
+          <input id="f-email" type="email" placeholder="david@vanta.com" autocomplete="email">
+        </div>
+        <div class="f-field">
+          <label for="f-first">First Name*</label>
+          <input id="f-first" type="text" value="David">
+        </div>
+        <div class="f-field">
+          <label for="f-last">Last Name*</label>
+          <input id="f-last" type="text" value="Ko">
+        </div>
+        <div class="f-field">
+          <label for="f-company">Company Name*</label>
+          <input id="f-company" type="text" value="Vanta">
+        </div>
+        <div class="f-field">
+          <label for="f-title">Job Title*</label>
+          <input id="f-title" type="text" value="VP of Engineering">
+        </div>
+        <div class="f-field full">
+          <label for="f-size">Company Size*</label>
+          <select id="f-size">
+            <option>1-100</option>
+            <option>101-1,000</option>
+            <option selected>1,001-5,000</option>
+            <option>5,001+</option>
+          </select>
+        </div>
+        <div class="f-field full">
+          <label for="f-country">Country*</label>
+          <select id="f-country">
+            <option selected>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="f-field full">
+          <label for="f-products">Which HackerRank products are you interested in?*</label>
+          <select id="f-products">
+            <option selected>Screen + Interview</option>
+            <option>Screen</option>
+            <option>Interview</option>
+            <option>Engage</option>
+            <option>SkillUp</option>
+          </select>
+        </div>
+      </div>
+      <p class="f-privacy">By clicking Schedule a Demo below you confirm that you have read and agree to HackerRank's <a href="https://www.hackerrank.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></p>
+      <button class="f-btn" type="submit">Schedule A Demo</button>
+      <div class="f-prefill">$ pre-filled from the same public data that built this page</div>
+    </form>
   </div>
 
   <!-- FOOTER -->
@@ -843,6 +983,12 @@
   }
   ['r-roles','r-hours','r-rate'].forEach(id => $(id).addEventListener('input', calc));
   calc();
+
+  // demo form: sample mode routes to HackerRank's real request-demo page
+  document.getElementById('demoform').addEventListener('submit', e => {
+    e.preventDefault();
+    window.open('https://www.hackerrank.com/request-demo?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=vanta_ai_readiness', '_blank', 'noopener');
+  });
 </script>
 </body>
 </html>

@@ -201,8 +201,9 @@
   h1{
     font-family:var(--font-display);font-weight:600;
     font-size:clamp(38px,6vw,64px);line-height:1.04;letter-spacing:-.015em;
-    color:var(--gs-5);max-width:14ch;
+    color:var(--gs-5);max-width:76%;
   }
+  @media (max-width:920px){h1{max-width:100%}}
   h1 em{
     font-style:normal;color:var(--green-30);
     font-family:var(--font-mono);font-weight:500;font-size:.88em;letter-spacing:-.02em;
@@ -222,7 +223,7 @@
   .prepared .tag b{color:var(--green-50);font-weight:500}
   /* co-brand lockup: HackerRank x prospect */
   .cobrand{display:flex;align-items:center;gap:16px;margin-bottom:30px}
-  .cobrand .hrmark{height:15px;display:block;opacity:.95}
+  .cobrand .hrmark{height:24px;display:block;opacity:.95}
   .cobrand .x{font-family:var(--font-mono);font-size:13px;color:var(--gs-60)}
   .cobrand .co{
     display:inline-flex;align-items:center;gap:10px;
@@ -536,7 +537,7 @@
   <div class="hero">
     <!-- co-brand lockup: logo URL comes from the Clay accounts table (logo_url column) -->
     <div class="cobrand">
-      <img class="hrmark" src="hackerrank-logo-light.svg" alt="HackerRank">
+      <img class="hrmark" src="hackerrank-mark.svg" alt="HackerRank">
       <span class="x">&#10005;</span>
       <span class="co">
         <img src="https://www.google.com/s2/favicons?domain=vanta.com&amp;sz=64" alt="Vanta logo" onerror="this.style.display='none'">

@@ -273,6 +273,15 @@ def build(d):
     return page
 
 def main():
+    # mirror the Vanta flagship at /vanta/ so all tier-1 URLs are uniform subpaths
+    vanta = TEMPLATE
+    vanta = vanta.replace('src="hackerrank-logo-light.svg"', 'src="../hackerrank-logo-light.svg"')
+    vanta = vanta.replace('src="hackerrank-logo-dark.svg"', 'src="../hackerrank-logo-dark.svg"')
+    vanta = vanta.replace('src="hackerrank-mark.svg"', 'src="../hackerrank-mark.svg"')
+    vanta = vanta.replace('src="logos/', 'src="../logos/')
+    os.makedirs(os.path.join(HERE, "vanta"), exist_ok=True)
+    open(os.path.join(HERE, "vanta", "index.html"), "w").write(vanta)
+    print("  generated vanta/index.html  (mirror of flagship)")
     for d in ACCOUNTS:
         outdir = os.path.join(HERE, d["slug"])
         os.makedirs(outdir, exist_ok=True)

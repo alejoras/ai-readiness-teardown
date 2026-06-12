@@ -19,7 +19,27 @@ TEMPLATE = open(os.path.join(HERE, "index.html")).read()
 GEN_DATE = "June 11, 2026"
 
 # ── per-account data (real from Clay accounts + people tables, 2026-06-11) ──
+# Slug rule MUST match the Clay formula: lowercase company Name, strip spaces/punctuation.
 ACCOUNTS = [
+    {
+        "slug": "temporaltechnologies", "company": "Temporal", "domain": "temporal.io",
+        "first": "Maxim", "last": "Fateev", "title": "Co-founder & CEO",
+        "headline": "How many will be tested for the way they'll actually work?",
+        "eng_roles": 17, "growth": 84, "employees": "529", "size_bucket": "101-1,000",
+        "ai_title": "Staff Software Engineer, AI Developer Experience",
+        "ai_roles": 2, "ai_label": "incl. a Staff SWE role on AI Developer Experience",
+        "context": "Durable execution platform (open source), 529 employees, 84% 12-mo growth",
+        "rec3_hook": "Temporal's brand is durable execution; its hiring signal should be just as reliable.",
+        "gauge": 37,
+        "roles": [
+            ("Staff Software Engineer, AI Developer Experience", "devex · AI", "part", "yes", 69),
+            ("Software Engineer, Nexus", "platform · product", "no", "part", 42),
+            ("Senior Software Engineer, Observability", "observability", "no", "part", 39),
+            ("Staff Software Engineer, Core Services", "core · staff", "no", "part", 37),
+            ("Senior Software Engineer, Cloud Infrastructure", "infra", "no", "no", 30),
+            ("Software Engineer, Developer Tooling", "tooling", "no", "no", 27),
+        ],
+    },
     {
         "slug": "drata", "company": "Drata", "domain": "drata.com",
         "first": "Daniel", "last": "Marashlian", "title": "Co-founder & CTO",

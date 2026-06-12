@@ -23,7 +23,7 @@ ACCOUNTS = [
     {
         "slug": "drata", "company": "Drata", "domain": "drata.com",
         "first": "Daniel", "last": "Marashlian", "title": "Co-founder & CTO",
-        "headline": "are you hiring devs, or <em>vibe coders</em>?",
+        "headline": "How many are vibe coders?",
         "eng_roles": 33, "growth": 6, "employees": "680", "size_bucket": "101-1,000",
         "ai_title": "Platform Engineer, AI tooling",
         "ai_roles": 4, "ai_label": "incl. a Platform Engineer role on AI tooling",
@@ -42,7 +42,7 @@ ACCOUNTS = [
     {
         "slug": "mercury", "company": "Mercury", "domain": "mercury.com",
         "first": "Ashwin", "last": "", "title": "Engineering leadership",
-        "headline": "can your screen tell who's good with AI from who's <em>hiding behind it</em>?",
+        "headline": "Can your screen tell who's good with AI from who's hiding behind it?",
         "eng_roles": 44, "growth": 33, "employees": "1,632", "size_bucket": "1,001-5,000",
         "ai_title": "Senior Software Engineer, AI Engineering",
         "ai_roles": 5, "ai_label": "incl. a Senior Software Engineer role on AI Engineering",
@@ -61,7 +61,7 @@ ACCOUNTS = [
     {
         "slug": "scaleai", "company": "Scale AI", "domain": "scale.com",
         "first": "Aakash", "last": "", "title": "Engineering leadership",
-        "headline": "the false positives are <em>already in your pipeline</em>.",
+        "headline": "The false positives are already in your pipeline.",
         "eng_roles": 111, "growth": 30, "employees": "6,741", "size_bucket": "5,001+",
         "ai_title": "Engineering Manager, AgentOps",
         "ai_roles": 18, "ai_label": "incl. an Engineering Manager role for AgentOps",
@@ -129,8 +129,8 @@ def build(d):
     # 2) hero kicker + headline + sub + prepared tags
     page = page.replace('AI-Readiness Teardown · June 11, 2026',
                         f'AI-Readiness Teardown · {GEN_DATE}')
-    default_h1 = f"you're hiring <em>{d['eng_roles']} engineers</em>. How many will be tested for the way they'll actually work?"
-    h1_inner = f"Hey {d['first']} — {d.get('headline', default_h1)}"
+    hook = d.get('headline', "How many will be tested for the way they'll actually work?")
+    h1_inner = f"Hey {d['first']} — you're hiring <em>{d['eng_roles']} engineers</em>. {hook}"
     page = page.replace(
         "<h1>Hey David — you're hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>",
         f"<h1>{h1_inner}</h1>")

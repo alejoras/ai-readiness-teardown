@@ -78,6 +78,49 @@ ACCOUNTS = [
             ("Software Engineer, Product", "product eng", "no", "no", 27),
         ],
     },
+    # ── cost-led variant pages (angle: "your devs are buried in interviews") ──
+    {
+        "slug": "rippling", "company": "Rippling", "domain": "rippling.com",
+        "variant": "cost", "no_contact": True,
+        "first": "", "last": "", "title": "Engineering leadership",
+        "eng_roles": 273, "growth": 38, "employees": "7,623", "size_bucket": "5,001+",
+        "ai_roles": 3, "ai_label": "incl. a Staff SWE role on Developer Experience",
+        "rec3_hook": "Rippling automates workforce ops end to end; its own hiring loop deserves the same efficiency.",
+        "gauge": 36,
+        "roles": [
+            ("Staff Software Engineer - Developer Experience", "devex · staff", "part", "yes", 66),
+            ("Senior Engineering Manager", "leadership", "no", "part", 41),
+            ("Engineering Manager", "leadership", "no", "part", 38),
+        ],
+    },
+    {
+        "slug": "gusto", "company": "Gusto", "domain": "gusto.com",
+        "variant": "cost",
+        "first": "Aaron", "last": "Averbuch", "title": "Head of Engineering",
+        "eng_roles": 54, "growth": 27, "employees": "4,439", "size_bucket": "1,001-5,000",
+        "ai_roles": 3, "ai_label": "incl. a Staff SWE role on AI Developer Tools",
+        "rec3_hook": "Gusto gives small businesses back their admin hours; its own engineers deserve their interview hours back.",
+        "gauge": 36,
+        "roles": [
+            ("Staff Software Engineer, AI Developer Tools", "devtools · AI", "part", "yes", 68),
+            ("Staff Software Engineer, Developer Productivity Async", "devprod · staff", "no", "part", 44),
+            ("Benefits Engineering Manager", "leadership", "no", "part", 37),
+        ],
+    },
+    {
+        "slug": "notion", "company": "Notion", "domain": "notion.so",
+        "variant": "cost", "no_contact": True,
+        "first": "", "last": "", "title": "Engineering leadership",
+        "eng_roles": 37, "growth": -6, "employees": "6,225", "size_bucket": "5,001+",
+        "ai_roles": 1, "ai_label": "1 explicitly AI role in the mix",
+        "rec3_hook": "Notion's product gives teams their time back; the hiring loop should do the same for its engineers.",
+        "gauge": 36,
+        "roles": [
+            ("Software Engineer, Developer Experience", "devex", "no", "part", 40),
+            ("Software Engineer, Security", "security", "no", "part", 38),
+            ("Software Engineer, Infrastructure", "infra", "no", "no", 31),
+        ],
+    },
     {
         "slug": "scaleai", "company": "Scale AI", "domain": "scale.com",
         "first": "Aakash", "last": "", "title": "Engineering leadership",
@@ -135,10 +178,27 @@ def build(d):
     page = TEMPLATE
     ai, adjacent, conventional, pct = mix_split(d)
     legacy = adjacent + conventional
+    cost_variant = d.get("variant") == "cost"
+    no_contact = d.get("no_contact", False)
+    greet = f'{d["company"]} team' if no_contact else d["first"]
     full_name = (d["first"] + " " + d["last"]).strip()
-    prepared = (f'Prepared for <b>{full_name}</b> · {d["title"]}, {d["company"]}'
-                if d["last"] else
-                f'Prepared for <b>{d["first"]}</b> · engineering leadership, {d["company"]}')
+    if no_contact:
+        prepared = f'Prepared for the engineering leadership team · {d["company"]}'
+    elif d["last"]:
+        prepared = f'Prepared for <b>{full_name}</b> · {d["title"]}, {d["company"]}'
+    else:
+        prepared = f'Prepared for <b>{d["first"]}</b> · engineering leadership, {d["company"]}'
+
+    # 0) meta description
+    if cost_variant:
+        meta = (f"What {d['company']}'s {d['eng_roles']} open engineering roles cost in "
+                f"senior-engineer interview hours, and the screening fix.")
+    else:
+        meta = (f"A teardown of {d['company']}'s {d['eng_roles']} open engineering roles, "
+                f"scored for AI-era readiness against HackerRank's 26M-developer benchmark.")
+    page = page.replace(
+        '<meta name="description" content="A teardown of Vanta\'s 43 open engineering roles, scored for AI-era readiness against HackerRank\'s 26M-developer benchmark.">',
+        f'<meta name="description" content="{meta}">')
 
     # 1) co-brand logo + name
     page = page.replace(
@@ -147,16 +207,34 @@ def build(d):
     page = page.replace('<span>Vanta</span>', f'<span>{d["company"]}</span>', 1)
 
     # 2) hero kicker + headline + sub + prepared tags
-    page = page.replace('AI-Readiness Teardown · June 11, 2026',
-                        f'AI-Readiness Teardown · {GEN_DATE}')
-    hook = d.get('headline', "How many will be tested for the way they'll actually work?")
-    h1_inner = f"Hey {d['first']} — you're hiring <em>{d['eng_roles']} engineers</em>. {hook}"
+    if cost_variant:
+        page = page.replace('AI-Readiness Teardown · June 11, 2026',
+                            f'Engineering Hiring Cost Teardown · {GEN_DATE}')
+        hours_est = f"{d['eng_roles'] * 25:,}"
+        h1_inner = (f"Hey {greet} — your engineers are <em>buried in interviews</em>. "
+                    f"Here's the bill.")
+        sub = (f"{d['company']} has {d['eng_roles']} open engineering roles. At Ashby's 2026 "
+               f"benchmark of ~25 interview hours per hire, that is roughly "
+               f"<strong>{hours_est} senior-engineer hours</strong> going to interviews instead "
+               f"of shipping. Built from your own job posts. "
+               f"<strong>No ask, no form, no gate.</strong> Five minutes, yours to keep.")
+        page = page.replace(
+            "A role-by-role read of Vanta's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.",
+            sub)
+    else:
+        page = page.replace('AI-Readiness Teardown · June 11, 2026',
+                            f'AI-Readiness Teardown · {GEN_DATE}')
+        hook = d.get('headline', "How many will be tested for the way they'll actually work?")
+        h1_inner = f"Hey {greet} — you're hiring <em>{d['eng_roles']} engineers</em>. {hook}"
     page = page.replace(
         "<h1>Hey David — you're hiring <em>43 engineers</em>. How many will be tested for the way they'll actually work?</h1>",
         f"<h1>{h1_inner}</h1>")
     page = page.replace(
         "A role-by-role read of Vanta's public engineering openings,",
         f"A role-by-role read of {d['company']}'s public engineering openings,")
+    page = page.replace(
+        "Everything in this band is pulled live from Vanta's Ashby board.",
+        f"Everything in this band is pulled live from {d['company']}'s public careers data.")
     page = page.replace('Generated <b>June 11, 2026</b>', f'Generated <b>{GEN_DATE}</b>')
     page = page.replace(
         'Prepared for <b>David Ko</b> · VP of Engineering, Vanta', prepared)
@@ -165,11 +243,19 @@ def build(d):
         f'source: <b>{d["domain"]}/careers</b> · pulled {GEN_DATE}')
 
     # 3) footprint stats block (rebuild fully)
+    if cost_variant:
+        last_stat = (f'<div class="stat"><span class="src src-ill">● MODELED</span>'
+                     f'<div class="num amber">{d["eng_roles"]*25:,} h</div>'
+                     f'<div class="lbl">Interview hours to fill these reqs (Ashby 2026 avg: ~25 h/hire)</div></div>')
+    else:
+        last_stat = (f'<div class="stat"><span class="src src-ill">● MODELED</span>'
+                     f'<div class="num amber">{pct(legacy)}%</div>'
+                     f'<div class="lbl">Of eng JDs with no stated AI-fluency requirement</div></div>')
     stats = f'''<div class="stats rv" style="margin-top:42px">
       <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">{d["eng_roles"]}</div><div class="lbl">Open engineering roles at {d["company"]}</div></div>
       <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">{ai}</div><div class="lbl">Explicitly AI roles — {d["ai_label"]}</div></div>
       <div class="stat"><span class="src src-real">● LIVE</span><div class="num">{d["growth"]}%</div><div class="lbl">Headcount growth, last 12 months</div></div>
-      <div class="stat"><span class="src src-ill">● MODELED</span><div class="num amber">{pct(legacy)}%</div><div class="lbl">Of eng JDs with no stated AI-fluency requirement</div></div>
+      {last_stat}
     </div>'''
     before, _, after = block(page, '<div class="stats rv" style="margin-top:42px">', '\n\n    <div class="finding')
     page = before + stats + after
@@ -284,6 +370,43 @@ def build(d):
     page = page.replace(
         "<title>Vanta Engineering Hiring — AI-Readiness Teardown | HackerRank</title>",
         f"<title>{d['company']} Engineering Hiring — AI-Readiness Teardown | HackerRank</title>")
+
+    # 14) cost-variant surgery: rewrite finding, drop teardown band + benchmark, prune nav
+    if cost_variant:
+        n = d["eng_roles"]; hrs = f"{n*25:,}"
+        new_finding = f'''<div class="finding rv">
+      <div class="big">Finding: filling these {n} reqs will cost roughly <em>{hrs} senior-engineer interview hours</em>. The most expensive part is round one.</div>
+      <p>At engineering's 2026 average of ~25 interview hours per hire (Ashby, 109M applications), {d["company"]}'s open reqs translate into {hrs} hours of engineer time spent screening instead of shipping — and round one is both the biggest block of those hours and the least predictive. <b>That is the round a structured, AI-era screen replaces.</b> Same bar, a fraction of the calendar. The calculator below runs on your real numbers.</p>
+    </div>'''
+        s = page.index('<div class="finding rv">')
+        e = page.index('</section>', s)
+        keep_tail = page[e:]
+        page = page[:s] + new_finding + '\n  ' + keep_tail
+        # drop the teardown band (band-light wrapper incl. its wrap)
+        t = page.index('<section id="teardown"')
+        s_band = page.rindex('<div class="band-light">', 0, t)
+        e_band = page.index('</div><!-- /band-light -->', t) + len('</div><!-- /band-light -->')
+        page = page[:s_band] + page[e_band:]
+        # drop the benchmark section
+        s = page.index('<section id="benchmark"')
+        e = page.index('</section>', s) + len('</section>')
+        page = page[:s] + page[e:]
+        # prune nav
+        page = page.replace('      <a href="#teardown">Teardown</a>\n', '')
+        page = page.replace('      <a href="#benchmark">Benchmark</a>\n', '')
+        page = page.replace('<a class="btn-sm" href="#cta">Get the full teardown</a>',
+                            '<a class="btn-sm" href="#cta">Get the full cost breakdown</a>')
+        # title + form for no-contact pages
+        page = page.replace(
+            f"<title>{d['company']} Engineering Hiring — AI-Readiness Teardown | HackerRank</title>",
+            f"<title>{d['company']} Engineering Hiring — The Interview-Hours Bill | HackerRank</title>")
+    if no_contact:
+        page = page.replace('placeholder="@', 'placeholder="hiring@')  # safety no-op
+        page = page.replace(f'placeholder="@{d["domain"]}"', f'placeholder="hiring@{d["domain"]}"')
+        page = page.replace('<input id="f-first" type="text" value="">',
+                            '<input id="f-first" type="text" value="" placeholder="First name">')
+        page = page.replace('<input id="f-last" type="text" value="">',
+                            '<input id="f-last" type="text" value="" placeholder="Last name">')
 
     # assets live one level up from /<slug>/
     page = page.replace('src="hackerrank-logo-light.svg"', 'src="../hackerrank-logo-light.svg"')

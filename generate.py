@@ -171,7 +171,7 @@ def build(d):
       <div class="stat"><span class="src src-real">● LIVE</span><div class="num">{d["growth"]}%</div><div class="lbl">Headcount growth, last 12 months</div></div>
       <div class="stat"><span class="src src-ill">● MODELED</span><div class="num amber">{pct(legacy)}%</div><div class="lbl">Of eng JDs with no stated AI-fluency requirement</div></div>
     </div>'''
-    before, _, after = block(page, '<div class="stats rv" style="margin-top:42px">', '\n    </div>\n\n    <div class="finding')
+    before, _, after = block(page, '<div class="stats rv" style="margin-top:42px">', '\n\n    <div class="finding')
     page = before + stats + after
 
     # 4) finding

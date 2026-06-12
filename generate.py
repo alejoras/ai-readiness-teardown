@@ -321,8 +321,9 @@ def build(d):
                         f'<div class="co-v" id="c-cost">${roles_n*hours_n*rate_n:,}</div>')
 
     # 9) recommendations: AI-role count + rec3 hook
+    ai_word = f"{ai} AI role" + ("" if ai == 1 else "s")
     page = page.replace("Screen the 5 AI roles the way they'll work",
-                        f"Screen the {ai} AI roles the way they'll work")
+                        f"Screen the {ai_word} the way they'll work")
     page = page.replace("Replace round one for the 29 legacy-screened roles",
                         f"Replace round one for the {legacy} legacy-screened roles")
     page = page.replace(
@@ -396,6 +397,10 @@ def build(d):
         page = page.replace('      <a href="#benchmark">Benchmark</a>\n', '')
         page = page.replace('<a class="btn-sm" href="#cta">Get the full teardown</a>',
                             '<a class="btn-sm" href="#cta">Get the full cost breakdown</a>')
+        # renumber section kickers after removing 02/03
+        page = page.replace('04 · What the status quo costs', '02 · What the status quo costs')
+        page = page.replace('05 · What we', '03 · What we')
+        page = page.replace('06 · Next step', '04 · Next step')
         # title + form for no-contact pages
         page = page.replace(
             f"<title>{d['company']} Engineering Hiring — AI-Readiness Teardown | HackerRank</title>",

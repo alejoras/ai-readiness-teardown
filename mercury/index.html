@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercury Engineering Hiring — AI-Readiness Teardown | HackerRank</title>
+<meta name="description" content="A teardown of Vanta's 43 open engineering roles, scored for AI-era readiness against HackerRank's 26M-developer benchmark.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+  /* ── HackerRank design tokens (extracted from hackerrank.com, 2026-06-11) ── */
+  :root{
+    --gs-90:#030914; --gs-80:#0f141c; --gs-60:#6a6d71; --gs-40:#b5b4b3;
+    --gs-30:#dadad8; --gs-20:#eaeae9; --gs-5:#ffffff;
+    --green-5:#e4ffec; --green-10:#c2ffdb; --green-20:#98eebc; --green-30:#72e4a3;
+    --green-40:#4ad888; --green-50:#22cd6e; --green-60:#19aa59; --green-70:#10843e;
+    --green-80:#085428; --green-90:#01230e;
+    --amber:#e8b341; --red:#e85d5d;
+    --font-display:'Funnel Display',sans-serif;
+    --font-body:'Satoshi',Verdana,sans-serif;
+    --font-mono:'Roboto Mono',monospace;
+    --maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--gs-90); color:var(--gs-20);
+    font-family:var(--font-body); font-size:17px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--green-50);color:var(--gs-90)}
+
+  /* atmospheric background: faint grid + green aurora */
+  .bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .bg::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(34,205,110,.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(34,205,110,.04) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  }
+  .bg::after{
+    content:"";position:absolute;top:-300px;left:50%;transform:translateX(-50%);
+    width:1100px;height:680px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(34,205,110,.13),transparent);
+    filter:blur(40px);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ── banding: dark / gradient transition / light, like hackerrank.com ── */
+  .band-dark{position:relative;display:flow-root}
+  .band-light{
+    position:relative;display:flow-root;
+    background:linear-gradient(180deg,#f7f9fd 0%,#eef1f9 55%,#e9eef8 100%);
+  }
+  .t-dark-light{
+    height:320px;
+    background:linear-gradient(180deg,#030914 0%,#0b2438 26%,#467d9e 52%,#a8cde0 72%,#e3edf5 88%,#f7f9fd 100%);
+  }
+  .t-light-dark{
+    height:320px;
+    background:linear-gradient(180deg,#e9eef8 0%,#a9d6d4 28%,#2e8b8b 52%,#0a3540 76%,#030914 100%);
+  }
+
+  /* starfield (hero, matches their navy night-sky hero) */
+  .stars{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 18%,rgba(255,255,255,.8),transparent),
+      radial-gradient(1.2px 1.2px at 21% 64%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.8px 1.8px at 33% 30%,rgba(255,255,255,.65),transparent),
+      radial-gradient(1.1px 1.1px at 44% 76%,rgba(255,255,255,.45),transparent),
+      radial-gradient(1.5px 1.5px at 56% 14%,rgba(255,255,255,.7),transparent),
+      radial-gradient(1.2px 1.2px at 64% 52%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.9px 1.9px at 73% 26%,rgba(255,255,255,.75),transparent),
+      radial-gradient(1.1px 1.1px at 81% 70%,rgba(255,255,255,.4),transparent),
+      radial-gradient(1.4px 1.4px at 90% 38%,rgba(255,255,255,.6),transparent),
+      radial-gradient(1.2px 1.2px at 96% 82%,rgba(255,255,255,.45),transparent),
+      radial-gradient(1.3px 1.3px at 15% 88%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.6px 1.6px at 49% 92%,rgba(255,255,255,.55),transparent);
+    animation:twinkle 5s ease-in-out infinite alternate;
+    mask-image:linear-gradient(180deg,#000 70%,transparent);
+  }
+  @keyframes twinkle{from{opacity:.55}to{opacity:1}}
+
+  /* live pulse indicator */
+  .pulse{
+    width:8px;height:8px;border-radius:50%;background:var(--green-50);
+    display:inline-block;flex-shrink:0;animation:pulse 1.9s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(34,205,110,.55)}
+    70%{box-shadow:0 0 0 9px rgba(34,205,110,0)}
+    100%{box-shadow:0 0 0 0 rgba(34,205,110,0)}
+  }
+  .tag-live{display:inline-flex;align-items:center;gap:9px}
+
+  /* ── light-band overrides (teardown section) ── */
+  .band-light .sec-kicker{color:var(--green-70)}
+  .band-light h2{color:#0f141c}
+  .band-light .sec-sub{color:#5b6168}
+  .band-light .mrow .ml{color:#30343b}
+  .band-light .mrow .ml span{color:#8a8f96}
+  .band-light .track,.band-light .sb-track{background:#e2e6ee}
+  .band-light .mrow .mv,.band-light .sb-num{color:#0f141c}
+  .band-light .mix-note{color:#5b6168}
+  .band-light .mix-note .pull{color:#0f141c}
+  .band-light .legend span{color:#8a8f96}
+  .band-light .scard{border-color:#dfe3ea;background:#fff;box-shadow:0 24px 60px rgba(15,20,28,.08)}
+  .band-light .scard th{background:#f4f6f9;color:#8a8f96;border-color:#e7eaef}
+  .band-light .scard td{color:#43484f;border-color:#eef0f4}
+  .band-light .scard tbody tr:hover{background:rgba(16,132,62,.045)}
+  .band-light .role{color:#0f141c}
+  .band-light .role span{color:#9aa0a7}
+  .band-light .chip.yes{color:#10843e;background:rgba(16,132,62,.08);border-color:rgba(16,132,62,.3)}
+  .band-light .chip.part{color:#8a6a14;background:rgba(232,179,65,.13);border-color:rgba(176,134,32,.35)}
+  .band-light .chip.no{color:#b04343;background:rgba(232,93,93,.09);border-color:rgba(206,93,93,.35)}
+  .band-light .table-note{background:#f4f6f9;color:#8a8f96}
+  .band-light .table-note b{color:#8a6a14}
+  .band-light .inline-cta{
+    background:linear-gradient(90deg,rgba(16,132,62,.08),rgba(16,132,62,.015));
+    border-color:rgba(16,132,62,.3);
+  }
+  .band-light .inline-cta .ic-t{color:#0f141c}
+  .band-light .inline-cta .ic-t b{color:#10843e}
+  .band-light .inline-cta a{color:#10843e;border-color:rgba(16,132,62,.35)}
+  /* demo section + footer on light band (form card itself stays dark, like their request-demo page) */
+  .band-light .demo{margin-top:10px}
+  .band-light .demo-copy h2 em{color:var(--green-70)}
+  .band-light .demo-copy .checks li{color:#43484f}
+  .band-light .alt-line{color:#8a8f96}
+  .band-light .alt-line a{color:#10843e}
+  .band-light .form-card{box-shadow:0 30px 80px rgba(15,20,28,.25);border-color:rgba(15,20,28,.12)}
+  .band-light footer{border-top-color:#dfe3ea}
+  .band-light .meth{background:#fff;border-color:#dfe3ea;color:#5b6168}
+  .band-light .meth h5{color:#8a8f96}
+  .band-light .meth b{color:#30343b}
+  .band-light .meth .r{color:#10843e}
+  .band-light .meth .i{color:#8a6a14}
+  .band-light .foot-row .by{color:#8a8f96}
+  .band-light .foot-row .by b{color:#5b6168}
+
+  /* ── top bar ── */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(3,9,20,.82);backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(234,234,233,.08);
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .topbar img{height:18px;display:block}
+  .topbar nav{display:flex;gap:26px}
+  .topbar nav a{
+    color:var(--gs-40);text-decoration:none;font-size:13.5px;font-weight:500;
+    letter-spacing:.01em;transition:color .2s;
+  }
+  .topbar nav a:hover{color:var(--green-50)}
+  .sample-chip{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
+    color:var(--amber);border:1px solid rgba(232,179,65,.4);border-radius:99px;
+    padding:4px 11px;text-transform:uppercase;white-space:nowrap;
+  }
+  .top-right{display:flex;align-items:center;gap:14px}
+  .btn-sm{
+    display:inline-block;background:var(--green-50);color:var(--gs-90);
+    font-weight:700;font-size:13px;text-decoration:none;padding:9px 18px;
+    border-radius:9px;transition:background .2s;white-space:nowrap;
+  }
+  .btn-sm:hover{background:var(--green-40)}
+
+  /* inline mid-funnel banner */
+  .inline-cta{
+    margin-top:22px;display:flex;align-items:center;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;
+    background:linear-gradient(90deg,rgba(34,205,110,.1),rgba(34,205,110,.02));
+    border:1px solid rgba(34,205,110,.25);border-radius:14px;padding:20px 26px;
+  }
+  .inline-cta .ic-t{font-family:var(--font-display);font-weight:500;font-size:18px;color:var(--gs-5)}
+  .inline-cta .ic-t b{color:var(--green-40);font-weight:600}
+  .inline-cta a{
+    color:var(--green-40);font-weight:700;font-size:14.5px;text-decoration:none;
+    white-space:nowrap;border-bottom:1.5px solid rgba(74,216,136,.4);
+    padding-bottom:2px;transition:border-color .2s;
+  }
+  .inline-cta a:hover{border-color:var(--green-40)}
+
+  /* product links on rec cards */
+  .rec{display:flex;flex-direction:column}
+  .rec .rlink{
+    margin-top:auto;padding-top:18px;font-size:13.5px;font-weight:700;
+    color:var(--green-50);text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+    transition:gap .2s;
+  }
+  .rec .rlink:hover{gap:11px}
+  .rec .rlink::after{content:"→"}
+
+  .btn-ghost{
+    display:inline-block;margin-top:34px;background:transparent;color:var(--gs-20);
+    font-weight:700;font-size:16px;text-decoration:none;padding:15px 32px;
+    border-radius:12px;border:1.5px solid rgba(234,234,233,.25);
+    transition:border-color .2s,color .2s,transform .2s;margin-left:14px;
+  }
+  .btn-ghost:hover{border-color:var(--green-50);color:var(--green-40);transform:translateY(-2px)}
+
+  /* ── hero ── */
+  .hero{padding:84px 0 64px;position:relative}
+  .kicker{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--green-50);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .kicker::before{content:"";width:26px;height:1px;background:var(--green-50)}
+  h1{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(38px,6vw,64px);line-height:1.04;letter-spacing:-.015em;
+    color:var(--gs-5);max-width:76%;
+  }
+  @media (max-width:920px){h1{max-width:100%}}
+  h1 em{
+    font-style:normal;color:var(--green-30);
+    font-family:var(--font-mono);font-weight:500;font-size:.88em;letter-spacing:-.02em;
+  }
+  .hero-sub{
+    margin-top:26px;font-size:19px;color:var(--gs-40);max-width:56ch;font-weight:400;
+  }
+  .hero-sub strong{color:var(--gs-20);font-weight:500}
+  .prepared{
+    margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+  }
+  .prepared .tag{
+    font-family:var(--font-mono);font-size:12px;color:var(--gs-40);
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.1);
+    border-radius:8px;padding:8px 14px;
+  }
+  .prepared .tag b{color:var(--green-50);font-weight:500}
+  /* co-brand lockup: HackerRank x prospect */
+  .cobrand{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+  .cobrand .hrmark{height:24px;display:block;opacity:.95}
+  .cobrand .x{font-family:var(--font-mono);font-size:13px;color:var(--gs-60)}
+  .cobrand .co{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--gs-5);border-radius:10px;padding:7px 14px 7px 9px;
+    box-shadow:0 4px 24px rgba(34,205,110,.12);
+  }
+  .cobrand .co img{height:22px;width:22px;object-fit:contain;display:block;border-radius:5px}
+  .cobrand .co span{
+    font-family:var(--font-display);font-weight:600;font-size:16px;color:var(--gs-90);
+    letter-spacing:-.01em;
+  }
+
+  /* staggered reveal */
+  .hero > *{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero > *:nth-child(2){animation-delay:.08s}
+  .hero > *:nth-child(3){animation-delay:.16s}
+  .hero > *:nth-child(4){animation-delay:.24s}
+  .hero > *:nth-child(5){animation-delay:.32s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ── customer logo marquee ── */
+  .marquee{padding:26px 0 4px}
+  .mq-label{
+    font-family:var(--font-mono);font-size:11px;color:var(--gs-60);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px;
+  }
+  .mq-viewport{
+    overflow:hidden;
+    mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  }
+  .mq-track{display:flex;align-items:center;width:max-content;animation:mq 38s linear infinite}
+  .mq-set{display:flex;align-items:center;gap:74px;padding-right:74px}
+  .mq-set img{height:23px;display:block;filter:brightness(0) invert(1);opacity:.48;transition:opacity .2s}
+  .mq-set img:hover{opacity:.9}
+  @keyframes mq{to{transform:translateX(-50%)}}
+
+  /* ── demo form (mirrors hackerrank.com/request-demo) ── */
+  .demo{margin:84px 0 0;display:grid;grid-template-columns:1fr 1.08fr;gap:64px;align-items:start}
+  .demo-copy h2 em{
+    font-style:normal;font-family:var(--font-mono);font-weight:500;
+    color:var(--green-40);font-size:.92em;
+  }
+  .demo-copy .checks{list-style:none;margin-top:30px;display:flex;flex-direction:column;gap:15px}
+  .demo-copy .checks li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--gs-30)}
+  .demo-copy .checks .ck{
+    width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;
+    background:var(--green-50);color:var(--gs-90);font-size:12px;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .demo-copy .alt-line{margin-top:30px;font-size:14px;color:var(--gs-60)}
+  .demo-copy .alt-line a{color:var(--green-40);font-weight:700;text-decoration:none}
+  .demo-copy .alt-line a:hover{text-decoration:underline}
+  .form-card{
+    background:linear-gradient(160deg,#0e1626 0%,#090e18 45%,#070b13 100%);
+    border:1px solid rgba(234,234,233,.11);border-radius:18px;padding:34px 32px 30px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }
+  .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .f-field{display:flex;flex-direction:column;gap:7px}
+  .f-field.full{grid-column:1/-1}
+  .f-field label{font-size:12.5px;font-weight:700;color:var(--gs-20)}
+  .f-field input,.f-field select{
+    background:#0b101c;border:1px solid rgba(234,234,233,.15);border-radius:8px;
+    padding:11px 13px;color:var(--gs-5);font-family:var(--font-body);font-size:14px;
+    outline:none;transition:border-color .2s;width:100%;appearance:auto;
+  }
+  .f-field input::placeholder{color:var(--gs-60)}
+  .f-field input:focus,.f-field select:focus{border-color:var(--green-50)}
+  .f-privacy{font-size:13px;color:var(--gs-40);margin-top:16px;line-height:1.5}
+  .f-privacy a{color:var(--green-40);text-decoration:none}
+  .f-btn{
+    width:100%;margin-top:16px;background:var(--green-60);color:#fff;border:none;
+    border-radius:9px;padding:15px;font-family:var(--font-body);font-weight:700;
+    font-size:15.5px;cursor:pointer;transition:background .2s,transform .15s;
+  }
+  .f-btn:hover{background:var(--green-50);color:var(--gs-90);transform:translateY(-1px)}
+  .f-prefill{
+    margin-top:13px;font-family:var(--font-mono);font-size:10.5px;color:var(--green-60);
+    text-align:center;letter-spacing:.02em;
+  }
+
+  /* ── stat band ── */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:rgba(234,234,233,.09);border:1px solid rgba(234,234,233,.09);
+    border-radius:16px;overflow:hidden;margin:10px 0 0;
+  }
+  .stat{background:var(--gs-90);padding:30px 26px;position:relative}
+  .stat .num{
+    font-family:var(--font-display);font-weight:600;font-size:46px;line-height:1;
+    color:var(--gs-5);
+  }
+  .stat .num.green{color:var(--green-50)}
+  .stat .num.amber{color:var(--amber)}
+  .stat .lbl{margin-top:10px;font-size:13.5px;color:var(--gs-60);line-height:1.45}
+  .stat .src{
+    position:absolute;top:14px;right:16px;font-family:var(--font-mono);
+    font-size:9.5px;color:var(--gs-60);letter-spacing:.05em;
+  }
+  .src-real{color:var(--green-60)!important}
+  .src-ill{color:var(--amber)!important}
+
+  /* ── sections ── */
+  section{padding:76px 0 8px}
+  .sec-kicker{
+    font-family:var(--font-mono);font-size:12px;color:var(--green-50);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(27px,3.6vw,38px);
+    line-height:1.12;letter-spacing:-.01em;color:var(--gs-5);max-width:24ch;
+  }
+  .sec-sub{margin-top:14px;color:var(--gs-40);max-width:62ch;font-size:16.5px}
+
+  /* headline finding */
+  .finding{
+    margin-top:44px;border-radius:20px;padding:44px 46px;
+    background:linear-gradient(135deg,var(--green-90) 0%,rgba(8,84,40,.45) 60%,rgba(3,9,20,0) 130%);
+    border:1px solid rgba(34,205,110,.28);position:relative;overflow:hidden;
+  }
+  .finding::after{
+    content:"</>";position:absolute;right:34px;bottom:14px;
+    font-family:var(--font-mono);font-size:120px;color:rgba(34,205,110,.07);font-weight:500;
+  }
+  .finding .big{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3.4vw,34px);
+    line-height:1.2;color:var(--gs-5);max-width:24ch;
+  }
+  .finding .big em{font-style:normal;color:var(--green-40)}
+  .finding p{margin-top:16px;color:var(--green-10);opacity:.85;max-width:58ch;font-size:16px}
+
+  /* ── mix chart (CSS bars) ── */
+  .mix{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  .mixbar{display:flex;flex-direction:column;gap:18px}
+  .mrow{display:grid;grid-template-columns:170px 1fr 56px;gap:16px;align-items:center}
+  .mrow .ml{font-size:14px;color:var(--gs-30);font-weight:500}
+  .mrow .ml span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);margin-top:2px}
+  .track{height:30px;background:var(--gs-80);border-radius:7px;overflow:hidden;position:relative}
+  .fill{
+    height:100%;border-radius:7px;width:0;
+    transition:width 1.1s cubic-bezier(.2,.7,.2,1);
+  }
+  .f-green{background:linear-gradient(90deg,var(--green-70),var(--green-50))}
+  .f-mid{background:linear-gradient(90deg,#8a6d1f,var(--amber))}
+  .f-low{background:linear-gradient(90deg,#7a2f2f,var(--red))}
+  .mrow .mv{font-family:var(--font-mono);font-size:15px;color:var(--gs-20);text-align:right}
+  .mix-note{color:var(--gs-40);font-size:15.5px}
+  .mix-note .pull{
+    font-family:var(--font-display);font-size:24px;font-weight:500;color:var(--gs-5);
+    line-height:1.3;margin-bottom:14px;display:block;max-width:20ch;
+  }
+  .legend{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;color:var(--gs-60)}
+  .dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+  /* ── scorecard table ── */
+  .scard{
+    margin-top:46px;border:1px solid rgba(234,234,233,.1);border-radius:16px;overflow:hidden;
+  }
+  .scard table{width:100%;border-collapse:collapse}
+  .scard th{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gs-60);text-align:left;padding:15px 20px;background:var(--gs-80);
+    border-bottom:1px solid rgba(234,234,233,.1);font-weight:500;
+  }
+  .scard td{
+    padding:15px 20px;border-bottom:1px solid rgba(234,234,233,.06);
+    font-size:14.5px;color:var(--gs-30);vertical-align:middle;
+  }
+  .scard tr:last-child td{border-bottom:none}
+  .scard tr{transition:background .15s}
+  .scard tbody tr:hover{background:rgba(34,205,110,.04)}
+  .role{font-weight:500;color:var(--gs-20)}
+  .role span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);margin-top:3px}
+  .chip{
+    font-family:var(--font-mono);font-size:10.5px;border-radius:6px;padding:4px 9px;
+    white-space:nowrap;font-weight:500;
+  }
+  .chip.yes{color:var(--green-40);background:rgba(34,205,110,.1);border:1px solid rgba(34,205,110,.3)}
+  .chip.part{color:var(--amber);background:rgba(232,179,65,.08);border:1px solid rgba(232,179,65,.3)}
+  .chip.no{color:var(--red);background:rgba(232,93,93,.08);border:1px solid rgba(232,93,93,.3)}
+  .scorebar{display:flex;align-items:center;gap:12px;min-width:170px}
+  .sb-track{flex:1;height:7px;border-radius:4px;background:var(--gs-80);overflow:hidden}
+  .sb-fill{height:100%;border-radius:4px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .sb-num{font-family:var(--font-mono);font-size:13.5px;color:var(--gs-20);width:30px;text-align:right}
+  .table-note{
+    padding:13px 20px;background:var(--gs-80);font-family:var(--font-mono);
+    font-size:10.5px;color:var(--gs-60);letter-spacing:.03em;
+  }
+  .table-note b{color:var(--amber);font-weight:500}
+
+  /* ── benchmark gauge ── */
+  .bench{
+    margin-top:46px;display:grid;grid-template-columns:380px 1fr;gap:60px;align-items:center;
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:20px;
+    padding:48px 50px;
+  }
+  .gauge{position:relative;width:100%;max-width:340px;margin:0 auto}
+  .gauge svg{width:100%;height:auto;display:block;overflow:visible}
+  .gauge .gtxt{
+    position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);text-align:center;
+  }
+  .gauge .gtxt .gv{font-family:var(--font-display);font-weight:600;font-size:54px;color:var(--gs-5);line-height:1}
+  .gauge .gtxt .gl{font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+  .bench-copy h3{
+    font-family:var(--font-display);font-weight:600;font-size:26px;color:var(--gs-5);
+    line-height:1.25;max-width:22ch;
+  }
+  .bench-copy p{margin-top:14px;color:var(--gs-40);font-size:15.5px;max-width:50ch}
+  .bench-copy .rank-line{
+    margin-top:22px;font-family:var(--font-mono);font-size:13px;color:var(--green-40);
+    border-left:2px solid var(--green-50);padding-left:14px;line-height:1.7;
+  }
+  .gmarks{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--gs-60)}
+
+  /* ── cost calculator ── */
+  .calc{
+    margin-top:46px;background:linear-gradient(180deg,var(--gs-80),rgba(15,20,28,.4));
+    border:1px solid rgba(234,234,233,.1);border-radius:20px;padding:48px 50px;
+    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  }
+  .calc-controls .crow{margin-bottom:30px}
+  .calc-controls label{
+    display:flex;justify-content:space-between;font-size:14px;color:var(--gs-30);
+    font-weight:500;margin-bottom:12px;
+  }
+  .calc-controls label output{font-family:var(--font-mono);color:var(--green-40);font-size:14px}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;
+    background:linear-gradient(90deg,var(--green-50) var(--p,50%),var(--gs-80) var(--p,50%));
+    outline:none;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+    background:var(--green-50);border:3px solid var(--gs-90);
+    box-shadow:0 0 0 1.5px var(--green-50),0 0 14px rgba(34,205,110,.5);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:14px;height:14px;border-radius:50%;background:var(--green-50);
+    border:3px solid var(--gs-90);box-shadow:0 0 0 1.5px var(--green-50);
+  }
+  .calc-out{text-align:left;border-left:1px solid rgba(234,234,233,.1);padding-left:56px}
+  .calc-out .co-l{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gs-60)}
+  .calc-out .co-v{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(40px,5vw,58px);
+    color:var(--green-40);line-height:1.05;margin:8px 0 4px;
+  }
+  .calc-out .co-s{font-size:14px;color:var(--gs-40);max-width:34ch}
+  .calc-out .co-sub{
+    margin-top:26px;padding-top:24px;border-top:1px dashed rgba(234,234,233,.12);
+  }
+  .calc-out .co-sub .co-v{font-size:clamp(28px,3.4vw,38px);color:var(--gs-5)}
+
+  /* ── recommendations ── */
+  .recs{margin-top:46px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .rec{
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:16px;
+    padding:30px 28px;transition:border-color .25s,transform .25s;
+  }
+  .rec:hover{border-color:rgba(34,205,110,.35);transform:translateY(-3px)}
+  .rec .rn{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--green-50);letter-spacing:.1em;
+  }
+  .rec h4{
+    font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--gs-5);
+    margin:12px 0 10px;line-height:1.3;
+  }
+  .rec p{font-size:14.5px;color:var(--gs-40)}
+  .rec p b{color:var(--gs-30);font-weight:500}
+
+  /* ── CTA ── */
+  .cta{
+    margin:84px 0 0;border-radius:24px;text-align:center;padding:74px 40px 78px;
+    background:radial-gradient(ellipse 70% 110% at 50% -10%,rgba(34,205,110,.22),transparent 70%),var(--gs-80);
+    border:1px solid rgba(34,205,110,.25);position:relative;overflow:hidden;
+  }
+  .cta h2{max-width:none;font-size:clamp(28px,4vw,42px)}
+  .cta p{margin:18px auto 0;color:var(--gs-40);max-width:52ch}
+  .cta .btn{
+    display:inline-block;margin-top:34px;background:var(--green-50);color:var(--gs-90);
+    font-family:var(--font-body);font-weight:700;font-size:16px;text-decoration:none;
+    padding:16px 36px;border-radius:12px;transition:background .2s,transform .2s;
+  }
+  .cta .btn:hover{background:var(--green-40);transform:translateY(-2px)}
+  .cta .mono-line{
+    margin-top:22px;font-family:var(--font-mono);font-size:12px;color:var(--gs-60);
+  }
+
+  /* ── footer / methodology ── */
+  footer{margin-top:80px;border-top:1px solid rgba(234,234,233,.08);padding:44px 0 64px}
+  .meth{
+    background:var(--gs-80);border:1px solid rgba(234,234,233,.08);border-radius:14px;
+    padding:26px 28px;font-size:13.5px;color:var(--gs-40);
+  }
+  .meth h5{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gs-60);margin-bottom:12px;font-weight:500;
+  }
+  .meth ul{list-style:none}
+  .meth li{padding:4px 0 4px 20px;position:relative}
+  .meth li::before{content:"›";position:absolute;left:2px;color:var(--green-60);font-family:var(--font-mono)}
+  .meth b{color:var(--gs-30);font-weight:500}
+  .meth .r{color:var(--green-50);font-family:var(--font-mono);font-size:11px}
+  .meth .i{color:var(--amber);font-family:var(--font-mono);font-size:11px}
+  .foot-row{
+    margin-top:34px;display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:18px;
+  }
+  .foot-row img{height:15px;opacity:.85}
+  .foot-row .by{font-size:13px;color:var(--gs-60)}
+  .foot-row .by b{color:var(--gs-40);font-weight:500}
+
+  /* scroll reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* ── responsive ── */
+  @media (max-width:920px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .mix,.bench,.calc,.demo{grid-template-columns:1fr;gap:38px}
+    .calc-out{border-left:none;padding-left:0;border-top:1px solid rgba(234,234,233,.1);padding-top:36px}
+    .recs{grid-template-columns:1fr}
+    .topbar nav{display:none}
+    .scard{overflow-x:auto}
+    .scard table{min-width:640px}
+  }
+
+  /* ── print = clean PDF export ── */
+  @media print{
+    body{background:#fff;color:#1a1d23;font-size:12px}
+    .bg,.sample-chip,.topbar nav,.cta .btn,.btn-sm,.btn-ghost,.inline-cta,
+    .stars,.t-dark-light,.t-light-dark,.marquee,.form-card{display:none}
+    .demo{grid-template-columns:1fr}
+    .demo-copy h2,.demo-copy .checks li{color:#0f141c}
+    .band-light{background:#fff}
+    header{position:static;background:#fff;border-color:#e5e5e5}
+    h1,h2,.finding .big,.stat .num,.rec h4,.bench-copy h3{color:#0f141c}
+    .stat,.rec,.bench,.calc,.scard,.meth,.finding,.cta{background:#fff;border-color:#ddd}
+    .finding{background:#f2fbf5}
+    section{padding:28px 0 4px;break-inside:avoid}
+    .hero{padding:30px 0 20px}
+    .hero > *{opacity:1;transform:none;animation:none}
+    .rv{opacity:1;transform:none}
+    .stat .lbl,.sec-sub,.mix-note,p{color:#444}
+  }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap topbar">
+    <img src="../hackerrank-logo-light.svg" alt="HackerRank">
+    <nav aria-label="Sections">
+      <a href="#footprint">Footprint</a>
+      <a href="#teardown">Teardown</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#cost">Cost</a>
+      <a href="#next">Next steps</a>
+    </nav>
+    <div class="top-right">
+      <span class="sample-chip">Sample asset · GTM demo</span>
+      <a class="btn-sm" href="#cta">Get the full teardown</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="band-dark">
+<div class="stars" aria-hidden="true"></div>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <!-- co-brand lockup: logo URL comes from the Clay accounts table (logo_url column) -->
+    <div class="cobrand">
+      <img class="hrmark" src="../hackerrank-mark.svg" alt="HackerRank">
+      <span class="x">&#10005;</span>
+      <span class="co">
+        <img src="https://www.google.com/s2/favicons?domain=mercury.com&amp;sz=64" alt="Mercury logo" onerror="this.style.display='none'">
+        <span>Mercury</span>
+      </span>
+    </div>
+    <div class="kicker">AI-Readiness Teardown · June 11, 2026</div>
+    <h1>Hey Ashwin — you're hiring <em>44 engineers</em>. How many will be tested for the way they'll actually work?</h1>
+    <p class="hero-sub">A role-by-role read of Mercury's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.</p>
+    <div class="prepared">
+      <span class="tag tag-live"><i class="pulse"></i> Generated <b>June 11, 2026</b> · refreshes while your reqs are open</span>
+      <span class="tag">Prepared for <b>Ashwin</b> · engineering leadership, Mercury</span>
+      <span class="tag">source: <b>mercury.com/careers</b> · pulled June 11, 2026</span>
+      <span class="tag">by Alejo Escriva · HackerRank GTM</span>
+    </div>
+  </div>
+
+  <!-- CUSTOMER LOGO MARQUEE -->
+  <div class="marquee" aria-label="Companies hiring with HackerRank">
+    <div class="mq-label">the teams you benchmark against already hire this way</div>
+    <div class="mq-viewport">
+      <div class="mq-track">
+        <div class="mq-set">
+          <img src="../logos/airbnb.svg" alt="Airbnb"><img src="../logos/stripe.svg" alt="Stripe"><img src="../logos/linkedin.svg" alt="LinkedIn"><img src="../logos/atlassian.svg" alt="Atlassian"><img src="../logos/ibm.svg" alt="IBM"><img src="../logos/snap.svg" alt="Snap Inc."><img src="../logos/doordash.svg" alt="DoorDash"><img src="../logos/adobe.svg" alt="Adobe"><img src="../logos/paypal.svg" alt="PayPal"><img src="../logos/goldmansachs.svg" alt="Goldman Sachs"><img src="../logos/canva.svg" alt="Canva">
+        </div>
+        <div class="mq-set" aria-hidden="true">
+          <img src="../logos/airbnb.svg" alt=""><img src="../logos/stripe.svg" alt=""><img src="../logos/linkedin.svg" alt=""><img src="../logos/atlassian.svg" alt=""><img src="../logos/ibm.svg" alt=""><img src="../logos/snap.svg" alt=""><img src="../logos/doordash.svg" alt=""><img src="../logos/adobe.svg" alt=""><img src="../logos/paypal.svg" alt=""><img src="../logos/goldmansachs.svg" alt=""><img src="../logos/canva.svg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTPRINT -->
+  <section id="footprint">
+    <div class="sec-kicker">01 · Hiring footprint</div>
+    <h2>The snapshot, from your own careers page</h2>
+    <p class="sec-sub">Everything in this band is pulled live from Vanta's Ashby board. It refreshes when this page rebuilds — this report is a pipeline, not a paper.</p>
+
+    <div class="stats rv" style="margin-top:42px">
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">44</div><div class="lbl">Open engineering roles at Mercury</div></div>
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num green">5</div><div class="lbl">Explicitly AI roles — incl. a Senior Software Engineer role on AI Engineering</div></div>
+      <div class="stat"><span class="src src-real">● LIVE</span><div class="num">33%</div><div class="lbl">Headcount growth, last 12 months</div></div>
+      <div class="stat"><span class="src src-ill">● MODELED</span><div class="num amber">89%</div><div class="lbl">Of eng JDs with no stated AI-fluency requirement</div></div>
+    </div>
+    </div>
+
+    <div class="finding rv">
+      <div class="big">Finding: every candidate for these 44 roles is using AI. Your screen can't tell <em>who's good with it</em> from <em>who's hiding behind it</em>.</div>
+      <p>That is signal collapse. 39 of 44 JDs still test algorithm recall and framework years: the exact things AI now does for free. So candidates pass screens they couldn't pass alone, interview well, and underperform in their first sprint. <b>The false positives are already in your pipeline.</b> Rewriting the JDs won't catch them, because the problem isn't the wording of the test. It's that the test can no longer see the skill that matters.</p>
+    </div>
+  </section>
+
+</div><!-- /wrap -->
+</div><!-- /band-dark -->
+
+<div class="t-dark-light" aria-hidden="true"></div>
+
+<div class="band-light">
+<div class="wrap">
+
+  <!-- TEARDOWN -->
+  <section id="teardown" style="padding-top:10px">
+    <div class="sec-kicker">02 · The teardown</div>
+    <h2>Role mix: who you say you need vs. how you'll test them</h2>
+
+    <div class="mix rv">
+      <div class="mixbar" id="mixbar">
+        <div class="mrow">
+          <div class="ml">AI-explicit roles<span>Senior Software Engineer, AI Engineering — modeled</span></div>
+          <div class="track"><div class="fill f-green" data-w="11%"></div></div>
+          <div class="mv">5</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">AI-adjacent roles<span>platform · data · infra — modeled</span></div>
+          <div class="track"><div class="fill f-mid" data-w="23%"></div></div>
+          <div class="mv">10</div>
+        </div>
+        <div class="mrow">
+          <div class="ml">Conventional reqs<span>2019-style screening signals — modeled</span></div>
+          <div class="track"><div class="fill f-low" data-w="66%"></div></div>
+          <div class="mv">29</div>
+        </div>
+      </div>
+      <div class="mix-note">
+        <span class="pull">Your most senior open roles are the least AI-tested.</span>
+        Staff and Senior platform roles carry the highest interview cost per hire — and their JDs lean hardest on credential proxies. The roles where a wrong hire derails a quarter are exactly the ones screened with the least signal.
+        <div class="legend">
+          <span><i class="dot" style="background:var(--green-50)"></i> tests AI fluency</span>
+          <span><i class="dot" style="background:var(--amber)"></i> partial signal</span>
+          <span><i class="dot" style="background:var(--red)"></i> legacy screen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scard rv">
+      <table>
+        <thead>
+          <tr><th>Role (live posting)</th><th>Tests AI fluency?</th><th>Reqs calibrated?</th><th>AI-readiness score</th></tr>
+        </thead>
+        <tbody id="scoretable">
+          <tr><td class="role">Senior Software Engineer, AI Engineering<span>AI eng</span></td><td><span class="chip part">PARTIAL</span></td><td><span class="chip yes">YES</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-green" data-w="70%"></div></div><span class="sb-num">70</span></div></td></tr>
+          <tr><td class="role">Software Engineer, AI Engineering<span>AI eng</span></td><td><span class="chip part">PARTIAL</span></td><td><span class="chip yes">YES</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-green" data-w="64%"></div></div><span class="sb-num">64</span></div></td></tr>
+          <tr><td class="role">Staff Software Engineer, Payments<span>payments · staff</span></td><td><span class="chip no">NO</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="45%"></div></div><span class="sb-num">45</span></div></td></tr>
+          <tr><td class="role">Senior Software Engineer, Platform<span>platform</span></td><td><span class="chip no">NO</span></td><td><span class="chip part">PARTIAL</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-mid" data-w="40%"></div></div><span class="sb-num">40</span></div></td></tr>
+          <tr><td class="role">Senior Backend Engineer, Banking<span>backend · banking</span></td><td><span class="chip no">NO</span></td><td><span class="chip no">NO</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-low" data-w="30%"></div></div><span class="sb-num">30</span></div></td></tr>
+          <tr><td class="role">Software Engineer, Product<span>product eng</span></td><td><span class="chip no">NO</span></td><td><span class="chip no">NO</span></td><td><div class="scorebar"><div class="sb-track"><div class="sb-fill f-low" data-w="27%"></div></div><span class="sb-num">27</span></div></td></tr>
+        </tbody>
+      </table>
+      <div class="table-note">Role titles are live from Mercury's careers page (June 11, 2026). <b>Scores in this sample are modeled placeholders</b> — the production engine scores each JD's full text with an LLM rubric: AI-fluency signals required, requirement inflation vs. market, signal-to-pedigree ratio. Showing 6 of 44; full table ships in the live version.</div>
+    </div>
+
+    <div class="inline-cta rv">
+      <span class="ic-t">This is <b>6 of 44</b> roles. The rest are one reply away.</span>
+      <a href="#cta">Get the full scorecard</a>
+    </div>
+  </section>
+
+  <div style="height:60px"></div>
+</div><!-- /wrap -->
+</div><!-- /band-light -->
+
+<div class="t-light-dark" aria-hidden="true"></div>
+
+<div class="band-dark">
+<div class="wrap">
+
+  <!-- BENCHMARK -->
+  <section id="benchmark" style="padding-top:10px">
+    <div class="sec-kicker">03 · The benchmark</div>
+    <h2>Where Mercury's screening bar sits against 26M+ developers</h2>
+
+    <div class="bench rv">
+      <div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 120">
+            <path d="M14 110 A 86 86 0 0 1 186 110" fill="none" stroke="#212a36" stroke-width="13" stroke-linecap="round"/>
+            <path id="garc" d="M14 110 A 86 86 0 0 1 186 110" fill="none" stroke="url(#ggrad)" stroke-width="13" stroke-linecap="round"
+                  stroke-dasharray="270.2" stroke-dashoffset="270.2"/>
+            <defs>
+              <linearGradient id="ggrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#10843e"/><stop offset="100%" stop-color="#22cd6e"/>
+              </linearGradient>
+            </defs>
+            <!-- markers -->
+            <g font-family="Roboto Mono" font-size="8" fill="#6a6d71">
+              <text x="6" y="119">0</text><text x="183" y="119">100</text>
+            </g>
+          </svg>
+          <div class="gtxt"><div class="gv" id="gv">0</div><div class="gl">AI-readiness · modeled</div></div>
+        </div>
+        <div class="gmarks"><span>industry median: 31</span><span>AI-era leaders: 78</span></div>
+      </div>
+      <div class="bench-copy">
+        <h3>Signal comes back one way: recalibrate against what good looks like now.</h3>
+        <p>You can't rebuild this in-house, because knowing what "good with AI" looks like requires watching millions of engineers actually work with it. HackerRank's 26M-developer community is that calibration set. A rank against the live market is readable signal. A raw score in a vacuum is not.</p>
+        <div class="rank-line">// they return a score.<br>// we return a rank against 26M real developers.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COST -->
+  <section id="cost">
+    <div class="sec-kicker">04 · What the status quo costs</div>
+    <h2>The interview-hours bill for these 44 reqs</h2>
+    <p class="sec-sub">Defaults use Ashby's 2026 benchmark: engineering averages <b style="color:var(--gs-20)">24.7 interview hours per hire</b>, nearly twice the hours of business roles (109M applications analyzed). Drag the sliders to your real numbers. This is the part a PDF couldn't do.</p>
+
+    <div class="calc rv">
+      <div class="calc-controls">
+        <div class="crow">
+          <label>Open engineering reqs <output id="o-roles">44</output></label>
+          <input type="range" id="r-roles" min="5" max="120" value="44">
+        </div>
+        <div class="crow">
+          <label>Interview hours per filled eng role <output id="o-hours">25 h</output></label>
+          <input type="range" id="r-hours" min="8" max="45" value="25">
+          <div style="margin-top:9px;font-family:var(--font-mono);font-size:10.5px;color:var(--gs-60)">
+            default from <a href="https://www.ashbyhq.com/talent-trends-report/reports/2023-recruiter-productivity-trends-report" target="_blank" rel="noopener" style="color:var(--green-60)">Ashby Talent Trends 2026</a>: 24.7 h per eng hire, your own ATS's benchmark
+          </div>
+        </div>
+        <div class="crow" style="margin-bottom:0">
+          <label>Loaded cost per senior-eng hour <output id="o-rate">$125</output></label>
+          <input type="range" id="r-rate" min="80" max="220" value="125" step="5">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="co-l">Senior engineering hours consumed</div>
+        <div class="co-v" id="c-hours">1,100 h</div>
+        <div class="co-s">to fill the current req load — shipping capacity that never reaches the roadmap.</div>
+        <div class="co-sub">
+          <div class="co-l">At loaded cost</div>
+          <div class="co-v" id="c-cost">$137,500</div>
+          <div class="co-s">before counting the false positives a low-signal screen sends to onsite.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section id="next">
+    <div class="sec-kicker">05 · What we'd do first</div>
+    <h2>Three moves, highest leverage first</h2>
+
+    <div class="recs rv">
+      <div class="rec">
+        <span class="rn">/01</span>
+        <h4>Screen the 5 AI roles the way they'll work</h4>
+        <p>Run candidates through <b>AI-assisted assessments</b> — AI assistant on, like the actual job — and score how they reason, iterate, and verify. The irony of hiring AI builders through an AI-blind loop disappears overnight.</p>
+        <a class="rlink" href="https://www.hackerrank.com/ai?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=mercury_ai_readiness" target="_blank" rel="noopener">See AI-era assessments</a>
+      </div>
+      <div class="rec">
+        <span class="rn">/02</span>
+        <h4>Replace round one for the 39 legacy-screened roles</h4>
+        <p>A structured assessment <b>replaces a round, it doesn't add one</b>. Benchmarked against 26M developers, it returns a defensible rank — and hands your senior ICs their interview hours back.</p>
+        <a class="rlink" href="https://www.hackerrank.com/products/screen/?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=mercury_ai_readiness" target="_blank" rel="noopener">How Screen replaces a round</a>
+      </div>
+      <div class="rec">
+        <span class="rn">/03</span>
+        <h4>Make the hiring record audit-ready</h4>
+        <p>Mercury operates in regulated finance; an auditable hiring record matters. A <b>percentile rank is an artifact</b> legal and compliance can stand behind — the same shape Vanguard used to cut interview rounds without lowering the bar.</p>
+        <a class="rlink" href="https://www.hackerrank.com/customers?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=mercury_ai_readiness" target="_blank" rel="noopener">See how Vanguard did it</a>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:70px"></div>
+</div><!-- /wrap -->
+</div><!-- /band-dark -->
+
+<div class="t-dark-light" aria-hidden="true"></div>
+
+<div class="band-light">
+<div class="wrap">
+
+  <!-- CTA: request-demo form, pre-filled from the same data that built the page -->
+  <div class="demo rv" id="cta">
+    <div class="demo-copy">
+      <div class="sec-kicker">06 · Next step</div>
+      <h2>See HackerRank <em>in action</em> on your 44 roles</h2>
+      <p class="sec-sub">A live, personalized demo with a product expert. For Mercury, we'd cover:</p>
+      <ul class="checks">
+        <li><span class="ck">✓</span> Screen: AI-era assessments for the 39 roles still on legacy screens</li>
+        <li><span class="ck">✓</span> Interview: pair-programming environments that mirror how your team actually builds</li>
+        <li><span class="ck">✓</span> The benchmark: every result ranked against 26M+ developers, audit-ready</li>
+        <li><span class="ck">✓</span> SkillUp: map the AI skills already inside your org before the next req opens</li>
+      </ul>
+      <p class="alt-line">Not ready for a call? <a href="mailto:alejoescriva@gmail.com?subject=Mercury%20teardown%20—%20send%20the%20full%20version">Reply and get all 44 roles scored instead</a> — no meeting required.</p>
+    </div>
+    <form class="form-card" id="demoform" novalidate>
+      <div class="f-grid">
+        <div class="f-field full">
+          <label for="f-email">Business Email*</label>
+          <input id="f-email" type="email" placeholder="ashwin@mercury.com" autocomplete="email">
+        </div>
+        <div class="f-field">
+          <label for="f-first">First Name*</label>
+          <input id="f-first" type="text" value="Ashwin">
+        </div>
+        <div class="f-field">
+          <label for="f-last">Last Name*</label>
+          <input id="f-last" type="text" value="">
+        </div>
+        <div class="f-field">
+          <label for="f-company">Company Name*</label>
+          <input id="f-company" type="text" value="Mercury">
+        </div>
+        <div class="f-field">
+          <label for="f-title">Job Title*</label>
+          <input id="f-title" type="text" value="Engineering leadership">
+        </div>
+        <div class="f-field full">
+          <label for="f-size">Company Size*</label>
+          <select id="f-size">
+            <option>1-100</option>
+            <option>101-1,000</option>
+            <option selected>1,001-5,000</option>
+            <option>5,001+</option>
+          </select>
+        </div>
+        <div class="f-field full">
+          <label for="f-country">Country*</label>
+          <select id="f-country">
+            <option selected>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="f-field full">
+          <label for="f-products">Which HackerRank products are you interested in?*</label>
+          <select id="f-products">
+            <option selected>Screen + Interview</option>
+            <option>Screen</option>
+            <option>Interview</option>
+            <option>Engage</option>
+            <option>SkillUp</option>
+          </select>
+        </div>
+      </div>
+      <p class="f-privacy">By clicking Schedule a Demo below you confirm that you have read and agree to HackerRank's <a href="https://www.hackerrank.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></p>
+      <button class="f-btn" type="submit">Schedule A Demo</button>
+      <div class="f-prefill">pre-filled from the same public data that built this page</div>
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="meth">
+      <h5>Methodology &amp; data provenance</h5>
+      <ul>
+        <li><span class="r">REAL</span> &nbsp;Role counts and titles: Mercury public careers page (<b>mercury.com/careers</b>) + Clay enrichment, pulled June 11, 2026 — 44 engineering roles, 5 explicitly AI.</li>
+        <li><span class="r">REAL</span> &nbsp;Benchmark infrastructure: HackerRank's 26M+ developer community; customer proof points (Vanguard, Atlassian, DoorDash) from public case studies.</li>
+        <li><span class="i">MODELED</span> &nbsp;Per-role AI-readiness scores, role-mix classification, the 88% figure, and benchmark gauge values are illustrative placeholders for this sample. In production they're generated per-JD by an LLM scoring rubric.</li>
+        <li><span class="r">REAL</span> &nbsp;Cost-model default: 24.7 interview hours per engineering hire, from Ashby's 2026 Talent Trends Report (109M applications, 247K jobs, Jan 2021 to Mar 2026). Loaded hourly rate stays adjustable; sliders exist for your real numbers.</li>
+      </ul>
+    </div>
+    <div class="foot-row">
+      <img src="../hackerrank-logo-dark.svg" alt="HackerRank">
+      <span class="by">Sample permissionless-value asset · built by <b>Alejo Escriva</b> for the HackerRank GTM take-home · not an official HackerRank publication</span>
+    </div>
+  </footer>
+
+</div><!-- /wrap -->
+</div><!-- /band-light -->
+</main>
+
+<script>
+  // scroll-position reveal (no IntersectionObserver — survives throttled/headless browsers)
+  const pending = {
+    rv: [...document.querySelectorAll('.rv')],
+    bars: [...document.querySelectorAll('#mixbar, #scoretable')],
+    gauge: document.querySelector('.gauge')
+  };
+  const seen = el => el.getBoundingClientRect().top < innerHeight * .88;
+
+  function animateGauge() {
+    const TARGET = 38, ARC = 270.2;
+    const arc = document.getElementById('garc'), gv = document.getElementById('gv');
+    const t0 = performance.now(), dur = 1400;
+    (function tick(t) {
+      const p = Math.min((t - t0) / dur, 1), ease = 1 - Math.pow(1 - p, 3);
+      arc.style.strokeDashoffset = ARC - (ARC * (TARGET / 100) * ease);
+      gv.textContent = Math.round(TARGET * ease);
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+    // belt-and-braces: if rAF is paused (hidden tab / print), land on final value
+    setTimeout(() => {
+      arc.style.strokeDashoffset = ARC - ARC * (TARGET / 100);
+      gv.textContent = TARGET;
+    }, dur + 200);
+  }
+
+  function checkReveals() {
+    pending.rv = pending.rv.filter(el => !seen(el) || (el.classList.add('in'), false));
+    pending.bars = pending.bars.filter(el => {
+      if (!seen(el)) return true;
+      el.querySelectorAll('[data-w]').forEach((f, i) =>
+        setTimeout(() => f.style.width = f.dataset.w, 120 * i + 150));
+      return false;
+    });
+    if (pending.gauge && seen(pending.gauge)) { animateGauge(); pending.gauge = null; }
+    if (!pending.rv.length && !pending.bars.length && !pending.gauge) {
+      removeEventListener('scroll', checkReveals);
+      removeEventListener('resize', checkReveals);
+      clearInterval(sweep);
+    }
+  }
+  addEventListener('scroll', checkReveals, { passive: true });
+  addEventListener('resize', checkReveals, { passive: true });
+  // interval sweep: catches scroll restoration and anchor jumps that fire no scroll event
+  const sweep = setInterval(checkReveals, 350);
+  checkReveals();
+
+  // cost calculator
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString('en-US');
+  function calc() {
+    const roles = +$('r-roles').value, hours = +$('r-hours').value, rate = +$('r-rate').value;
+    $('o-roles').textContent = roles;
+    $('o-hours').textContent = hours + ' h';
+    $('o-rate').textContent = '$' + rate;
+    $('c-hours').textContent = fmt(roles * hours) + ' h';
+    $('c-cost').textContent = '$' + fmt(roles * hours * rate);
+    ['r-roles','r-hours','r-rate'].forEach(id => {
+      const el = $(id), p = (el.value - el.min) / (el.max - el.min) * 100;
+      el.style.setProperty('--p', p + '%');
+    });
+  }
+  ['r-roles','r-hours','r-rate'].forEach(id => $(id).addEventListener('input', calc));
+  calc();
+
+  // demo form: sample mode routes to HackerRank's real request-demo page
+  document.getElementById('demoform').addEventListener('submit', e => {
+    e.preventDefault();
+    window.open('https://www.hackerrank.com/request-demo?utm_source=pvp_teardown&utm_medium=email_asset&utm_campaign=mercury_ai_readiness', '_blank', 'noopener');
+  });
+</script>
+</body>
+</html>

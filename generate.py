@@ -80,6 +80,20 @@ ACCOUNTS = [
     },
     # ── cost-led variant pages (angle: "your devs are buried in interviews") ──
     {
+        "slug": "vanta", "company": "Vanta", "domain": "vanta.com",
+        "variant": "cost",
+        "first": "Iccha", "last": "Sethi", "title": "SVP of Engineering",
+        "eng_roles": 44, "growth": 85, "employees": "1,915", "size_bucket": "1,001-5,000",
+        "ai_roles": 5, "ai_label": "incl. 2× Engineering Manager, AI",
+        "rec3_hook": "Vanta sells continuous trust; its hiring bar should be defensible too.",
+        "gauge": 36,
+        "roles": [
+            ("Staff Engineer, Product Engineering", "product · staff", "part", "yes", 64),
+            ("Senior Software Engineer, GTM Engineering", "gtm eng", "no", "part", 41),
+            ("Senior Systems Engineer, Corporate Engineering", "corp eng", "no", "part", 38),
+        ],
+    },
+    {
         "slug": "rippling", "company": "Rippling", "domain": "rippling.com",
         "variant": "cost", "no_contact": True,
         "first": "", "last": "", "title": "Engineering leadership",
@@ -421,15 +435,8 @@ def build(d):
     return page
 
 def main():
-    # mirror the Vanta flagship at /vanta/ so all tier-1 URLs are uniform subpaths
-    vanta = TEMPLATE
-    vanta = vanta.replace('src="hackerrank-logo-light.svg"', 'src="../hackerrank-logo-light.svg"')
-    vanta = vanta.replace('src="hackerrank-logo-dark.svg"', 'src="../hackerrank-logo-dark.svg"')
-    vanta = vanta.replace('src="hackerrank-mark.svg"', 'src="../hackerrank-mark.svg"')
-    vanta = vanta.replace('src="logos/', 'src="../logos/')
-    os.makedirs(os.path.join(HERE, "vanta"), exist_ok=True)
-    open(os.path.join(HERE, "vanta", "index.html"), "w").write(vanta)
-    print("  generated vanta/index.html  (mirror of flagship)")
+    # /vanta/ is now a generated cost-variant page (in ACCOUNTS); the hand-tuned
+    # AI-readiness flagship remains at root as the template + original angle.
     for d in ACCOUNTS:
         outdir = os.path.join(HERE, d["slug"])
         os.makedirs(outdir, exist_ok=True)

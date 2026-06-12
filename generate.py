@@ -23,6 +23,7 @@ GEN_DATE = "June 11, 2026"
 ACCOUNTS = [
     {
         "slug": "temporaltechnologies", "company": "Temporal", "domain": "temporal.io",
+        "variant": "cost",
         "first": "Maxim", "last": "Fateev", "title": "Co-founder & CEO",
         "headline": "How many will be tested for the way they'll actually work?",
         "eng_roles": 17, "growth": 84, "employees": "529", "size_bucket": "101-1,000",
@@ -42,6 +43,7 @@ ACCOUNTS = [
     },
     {
         "slug": "drata", "company": "Drata", "domain": "drata.com",
+        "variant": "cost",
         "first": "Daniel", "last": "Marashlian", "title": "Co-founder & CTO",
         "headline": "How many are vibe coders?",
         "eng_roles": 33, "growth": 6, "employees": "680", "size_bucket": "101-1,000",
@@ -61,6 +63,7 @@ ACCOUNTS = [
     },
     {
         "slug": "mercury", "company": "Mercury", "domain": "mercury.com",
+        "variant": "cost",
         "first": "Ashwin", "last": "", "title": "Engineering leadership",
         "headline": "Can your screen tell who's good with AI from who's hiding behind it?",
         "eng_roles": 44, "growth": 33, "employees": "1,632", "size_bucket": "1,001-5,000",
@@ -137,6 +140,7 @@ ACCOUNTS = [
     },
     {
         "slug": "scaleai", "company": "Scale AI", "domain": "scale.com",
+        "variant": "cost",
         "first": "Aakash", "last": "", "title": "Engineering leadership",
         "headline": "The false positives are already in your pipeline.",
         "eng_roles": 111, "growth": 30, "employees": "6,741", "size_bucket": "5,001+",

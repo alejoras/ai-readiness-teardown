@@ -164,17 +164,17 @@ def build(d):
 
     # 5) mix bars
     mix = f'''<div class="mrow">
-          <div class="ml">AI-explicit roles<span>{html.escape(d["ai_title"])} — modeled</span></div>
+          <div class="ml">Screens for AI-era skill<span>AI assistant on, like the real job — modeled</span></div>
           <div class="track"><div class="fill f-green" data-w="{pct(ai)}%"></div></div>
           <div class="mv">{ai}</div>
         </div>
         <div class="mrow">
-          <div class="ml">AI-adjacent roles<span>platform · data · infra — modeled</span></div>
+          <div class="ml">Partial, inconsistent signal<span>depends which panel you draw — modeled</span></div>
           <div class="track"><div class="fill f-mid" data-w="{pct(adjacent)}%"></div></div>
           <div class="mv">{adjacent}</div>
         </div>
         <div class="mrow">
-          <div class="ml">Conventional reqs<span>2019-style screening signals — modeled</span></div>
+          <div class="ml">Legacy screen, AI-blind<span>algorithm recall, framework years — modeled</span></div>
           <div class="track"><div class="fill f-low" data-w="{pct(conventional)}%"></div></div>
           <div class="mv">{conventional}</div>
         </div>'''
